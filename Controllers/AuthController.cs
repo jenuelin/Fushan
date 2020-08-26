@@ -7,7 +7,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using DataServices.Interface;
 using DataServices.Model;
+using Fushan.Helpers;
 using Messages;
 using Messages.Auth;
 using Microsoft.AspNetCore.Authorization;
@@ -25,12 +27,33 @@ namespace Fushan.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtSettings _jwtSettings;
+        private readonly IMember _member;
 
-        public AuthController(IMapper mapper, UserManager<AppUser> userManager, IOptionsSnapshot<JwtSettings> jwtSettings)
+        public AuthController(IMember member, IMapper mapper, UserManager<AppUser> userManager, IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _mapper = mapper;
+            _member = member;
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
+        }
+        // POST api/accounts
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> Post([FromBody] RegistrationRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userIdentity = _mapper.Map<RegistrationRequest, AppUser>(model);
+
+            var result = await _userManager.CreateAsync(userIdentity, model.Password);
+
+            if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+
+            await _member.CreateMember(userIdentity.Id, model.Location);
+
+            return new OkObjectResult("Account created");
         }
 
         [HttpPost("SignIn")]
@@ -47,7 +70,14 @@ namespace Fushan.Controllers
             if (userSigninResult)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-                return Ok(GenerateJwt(user, roles));
+                return Ok(new
+                {
+                    Id = user.Id,
+                    Username = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Token = GenerateJwt(user, roles)
+                });
             }
 
             return BadRequest("Email or password incorrect.");
