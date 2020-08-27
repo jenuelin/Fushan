@@ -1,9 +1,13 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { AccountService } from './_services';
+import { AccountService } from './utils/services/account.service';
 import { User } from './_models';
 
-@Component({ selector: 'app', templateUrl: 'app.component.html' })
+@Component({
+  selector: 'app',
+  templateUrl: 'app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
 export class AppComponent {
     user: User;
 

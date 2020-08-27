@@ -1,2 +1,2 @@
-﻿export * from './account.service';
+﻿export * from '../utils/services/account.service';
 export * from './alert.service';

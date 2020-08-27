@@ -33,9 +33,24 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\account\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\account\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\account\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\account\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\account\account-routing.module.ts" />
+    <None Remove="ClientApp\src\app\account\account.module.ts" />
+    <None Remove="ClientApp\src\app\account\layout.component.html" />
+    <None Remove="ClientApp\src\app\account\layout.component.ts" />
+    <None Remove="ClientApp\src\app\account\login.component.html" />
+    <None Remove="ClientApp\src\app\account\login.component.ts" />
+    <None Remove="ClientApp\src\app\account\register.component.html" />
+    <None Remove="ClientApp\src\app\account\register.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
