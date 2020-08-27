@@ -7,8 +7,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using DataServices.Interface;
 using DataServices.Model;
+using DataServices.Services;
 using Fushan.Helpers;
 using Messages;
 using Messages.Auth;
@@ -51,7 +51,7 @@ namespace Fushan.Controllers
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _member.CreateMember(userIdentity.Id, model.Location);
+            //await _member.CreateMember(userIdentity.Id, model.Location);
 
             return new OkObjectResult("Account created");
         }

@@ -16,7 +16,7 @@ namespace Fushan.Mapping
             //CreateMap<MusicResource, Music>();
             //CreateMap<SaveMusicResource, Music>();
             //CreateMap<ArtistResource, Artist>();
-            //CreateMap<SaveArtistResource, Artist>();
+            CreateMap<CreateUpdateDepartmentRequest, Department>();
             CreateMap<RegistrationRequest, AppUser>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));
         }

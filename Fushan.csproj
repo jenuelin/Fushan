@@ -51,6 +51,10 @@
     <None Remove="ClientApp\src\app\account\login.component.ts" />
     <None Remove="ClientApp\src\app\account\register.component.html" />
     <None Remove="ClientApp\src\app\account\register.component.ts" />
+    <None Remove="ClientApp\src\app\_components\alert.component.html" />
+    <None Remove="ClientApp\src\app\_components\alert.component.ts" />
+    <None Remove="ClientApp\src\app\_components\index.ts" />
+    <None Remove="ClientApp\src\app\_helpers\auth.guard.ts" />
   </ItemGroup>
 
   <ItemGroup>

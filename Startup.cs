@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using AutoMapper;
 using DataServices.Db;
-using DataServices.Interface;
 using DataServices.Model;
 using DataServices.Services;
 using Fushan.Extensions;
@@ -111,7 +110,7 @@ namespace Fushan
             services.AddTransient<IRedisRepository<Member>, RedisRepository<Member>>();
             services.AddTransient<INewRedisRepository, NewRedisRepository>();
             services.AddTransient<IMember, MemberServices>();
-            services.AddTransient<IMemberActions, MemberActions>();
+            services.AddTransient<IDepartment, DepartmentServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

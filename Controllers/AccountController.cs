@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using DataServices.Interface;
 using DataServices.Model;
+using DataServices.Services;
 using Fushan.Helpers;
 using Messages;
 using Microsoft.AspNetCore.Identity;
@@ -40,9 +40,23 @@ namespace Fushan.Controllers
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _member.CreateMember(userIdentity.Id, model.Location);
+            //await _member.CreateMember(userIdentity.Id, model.Location);
 
             return new OkObjectResult("Account created");
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _userManager.DeleteAsync(await _userManager.FindByIdAsync(id));
+
+            return new OkObjectResult("Account deleted");
         }
     }
 }
