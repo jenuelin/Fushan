@@ -7,23 +7,28 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: 'my-auth-token'
+  })
+};
+
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
-  private httpOptions = {};
+  private headers: HttpHeaders = new HttpHeaders();
 
     constructor(
         private router: Router,
         private http: HttpClient
     ) {
-        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+      let user = JSON.parse(localStorage.getItem('user'));
+      this.userSubject = new BehaviorSubject<User>(user);
       this.user = this.userSubject.asObservable();
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'text/json'
-        })
-      }
+      httpOptions.headers =
+        httpOptions.headers.set('Authorization', 'Bearer ' + user.token);
     }
 
     public get userValue(): User {
@@ -31,10 +36,12 @@ export class AccountService {
     }
 
     login(email, password) {
-      return this.http.post<User>(`${environment.apiUrl}/api/auth/signin`, { email, password }, this.httpOptions)
+      return this.http.post<User>(`${environment.apiUrl}/api/auth/signin`, { email, password }, httpOptions)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+              localStorage.setItem('user', JSON.stringify(user));
+              httpOptions.headers =
+                httpOptions.headers.set('Authorization', 'Bearer ' + user.token);
                 this.userSubject.next(user);
                 return user;
             }));
@@ -48,11 +55,12 @@ export class AccountService {
     }
 
     register(user: User) {
-      return this.http.post(`${environment.apiUrl}/api/auth/signup`, user, this.httpOptions);
+      return this.http.post(`${environment.apiUrl}/api/auth/signup`, user, httpOptions);
     }
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+  getAll(params) {
+    httpOptions["params"] = params;
+    return this.http.get<User[]>(`${environment.apiUrl}/api/user`, httpOptions);
     }
 
     getById(id: string) {

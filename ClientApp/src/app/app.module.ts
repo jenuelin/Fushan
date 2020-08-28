@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UsersModule } from '@app/views/users/users.module';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -31,6 +32,8 @@ import { AppButtonComponent } from './_components/app-button/app-button.componen
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-menu/user-dropdown-menu.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { BreadcrumbComponent } from './_components/breadcrumb/breadcrumb.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -38,9 +41,11 @@ registerLocaleData(localeEn, 'en-EN');
     imports: [
         BrowserModule,
         ReactiveFormsModule,
-        HttpClientModule,
+    HttpClientModule,
+    UsersModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BreadcrumbModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
@@ -65,6 +70,7 @@ registerLocaleData(localeEn, 'en-EN');
       NotificationsDropdownMenuComponent,
       AppButtonComponent,
       UserDropdownMenuComponent,
+      BreadcrumbComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

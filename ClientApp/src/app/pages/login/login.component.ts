@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate([this.returnUrl]);
           },
           error => {
+            this.toastr.error('錯誤訊息', error);
             //this.alertService.error(error);
             //this.loading = false;
           });

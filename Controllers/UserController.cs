@@ -1,32 +1,36 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DataServices.Model;
 using DataServices.Services;
+using Fushan.Extensions;
 using Fushan.Helpers;
 using Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Fushan.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class AccountController : ControllerBase
+    [ApiController, Authorize]
+    public class UserController : ControllerBase
     {
         private readonly IMember _member;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         //private readonly IHubContext<StronglyTypedChatHubBase, IChatClient> _hub;
-        public AccountController(IMember member, UserManager<AppUser> userManager, IMapper mapper)
+        public UserController(IMember member, UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
             _member = member;
         }
         // POST api/accounts
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] RegistrationRequest model)
         {
             if (!ModelState.IsValid)
@@ -44,6 +48,16 @@ namespace Fushan.Controllers
 
             return new OkObjectResult("Account created");
         }
+
+        [HttpGet]
+        public async Task<PaginatedList<AppUser>> GetAll(GetUsersRequest request)
+        {
+            var users = _userManager.Users.Where(request.UserID, x => x.UserID == request.UserID)
+                .Where(request.UserName, x => x.UserName == request.UserName);
+            users = users.OrderByDynamic(request.SortBy, request.IsDesc);
+            return await PaginatedList<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows);
+        }
+
 
         [HttpDelete]
         [Route("{id}")]

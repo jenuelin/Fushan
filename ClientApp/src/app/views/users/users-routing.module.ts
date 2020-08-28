@@ -4,10 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
+import { MainComponent } from '@app/pages/main/main.component';
 
 const routes: Routes = [
     {
-        path: 'Users', component: LayoutComponent,
+    path: 'users', component: MainComponent,
         children: [
             { path: '', component: ListComponent },
             { path: 'add', component: AddEditComponent },
