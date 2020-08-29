@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CreateUpdateMemberRequest.cs" />
+    <Compile Remove="DeleteMemberRequest.cs" />
+    <Compile Remove="GetMemberRequest.cs" />
+    <Compile Remove="GetMemberResponse.cs" />
+    <Compile Remove="GetMembersRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Configration\Configration.csproj" />
+  </ItemGroup>
+
+</Project>
