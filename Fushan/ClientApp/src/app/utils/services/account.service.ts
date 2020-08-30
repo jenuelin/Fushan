@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'my-auth-token'
-  })
-};
+import { User, Paging, UserTable, TableList } from '@app/_models';
+import * as _ from 'lodash';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
-  private headers: HttpHeaders = new HttpHeaders();
+  //private headers: HttpHeaders = new HttpHeaders();
+  private httpOptions = {
+    headers: new HttpHeaders().set('Content-Type', 'application/json',)
+  };
 
     constructor(
         private router: Router,
@@ -27,8 +24,13 @@ export class AccountService {
       let user = JSON.parse(localStorage.getItem('user'));
       this.userSubject = new BehaviorSubject<User>(user);
       this.user = this.userSubject.asObservable();
-      httpOptions.headers =
-        httpOptions.headers.set('Authorization', 'Bearer ' + user.token);
+      //this.httpOptions = {
+      //  headers: new HttpHeaders({
+      //    'Content-Type': 'application/json',
+      //    'Authorization': 'Bearer ' + _.get(user, 'token', '')
+      //  })
+      //};
+        //this.httpOptions.headers.set('Authorization', 'Bearer ' + _.get(user,'token'));
     }
 
     public get userValue(): User {
@@ -36,12 +38,11 @@ export class AccountService {
     }
 
     login(email, password) {
-      return this.http.post<User>(`${environment.apiUrl}/api/auth/signin`, { email, password }, httpOptions)
+      return this.http.post<User>(`${environment.apiUrl}/api/auth/signin`, { email, password }, this.httpOptions)
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('user', JSON.stringify(user));
-              httpOptions.headers =
-                httpOptions.headers.set('Authorization', 'Bearer ' + user.token);
+              this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + _.get(user, 'token'));
                 this.userSubject.next(user);
                 return user;
             }));
@@ -55,16 +56,16 @@ export class AccountService {
     }
 
     register(user: User) {
-      return this.http.post(`${environment.apiUrl}/api/auth/signup`, user, httpOptions);
+      return this.http.post(`${environment.apiUrl}/api/user`, user, this.httpOptions);
     }
 
-  getAll(params) {
-    httpOptions["params"] = params;
-    return this.http.get<User[]>(`${environment.apiUrl}/api/user`, httpOptions);
+  getAll(paging: Paging) {
+    this.httpOptions["params"] = paging;
+    return this.http.get<TableList<UserTable>>(`${environment.apiUrl}/api/user`, this.httpOptions);
     }
 
     getById(id: string) {
-        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+      return this.http.get<User>(`${environment.apiUrl}/user/${id}`);
     }
 
     update(id, params) {

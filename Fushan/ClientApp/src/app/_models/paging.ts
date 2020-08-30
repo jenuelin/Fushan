@@ -1,6 +1,6 @@
 export class Paging {
-  Page: number;
-  Rows: number;
-  OrderBy: string;
-  SortBy: string;
+  page: number;
+  rows: number;
+  orderBy: string;
+  sortBy: string;
 }

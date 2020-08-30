@@ -1,11 +1,14 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using DataServices.Model;
 using DataServices.Services;
 using Fushan.Extensions;
 using Fushan.Helpers;
+using Fushan.Mapping;
 using Messages;
+using Messages.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -50,12 +53,25 @@ namespace Fushan.Controllers
         }
 
         [HttpGet]
-        public async Task<PaginatedList<AppUser>> GetAll(GetUsersRequest request)
+        public async Task<AppUserResponse> GetAll([FromQuery] GetUsersRequest request)
         {
+            //TODO: 把config改成DI方式
+            //var config = new MapperConfiguration(cfg => {
+            //    cfg.AddProfile<MappingProfile>();
+            //});
             var users = _userManager.Users.Where(request.UserID, x => x.UserID == request.UserID)
                 .Where(request.UserName, x => x.UserName == request.UserName);
             users = users.OrderByDynamic(request.SortBy, request.IsDesc);
-            return await PaginatedList<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows);
+            var result = await PaginatedIQueryable<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows);
+            var userMappers = result.Item.ProjectTo<AppUserModel>(MappingProfile.Config).ToArray();
+
+            return new AppUserResponse { 
+                Valid = true,
+                Count = result.Count,
+                PagePageIndex = result.PageIndex,
+                TotalPages = result.TotalPages,
+                table = userMappers
+            };
         }
 
 

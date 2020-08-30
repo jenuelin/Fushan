@@ -1,7 +1,7 @@
 ﻿using System;
 using Configration.Enums;
 
-namespace Messages
+namespace Messages.Account
 {
     public class RegistrationRequest
     {

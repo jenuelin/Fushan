@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 using AutoMapper;
 using DataServices.Db;
 using DataServices.Model;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Converters;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
@@ -31,6 +33,11 @@ namespace Fushan
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers(options => {
+                options.RespectBrowserAcceptHeader = true;
+            }).AddNewtonsoftJson(options => {
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
+            });
             services.AddControllersWithViews();
             services.AddOpenApiDocument(document =>
             {
@@ -65,42 +72,11 @@ namespace Fushan
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1d);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
                 options.Lockout.MaxFailedAccessAttempts = 5;
             })
                 .AddEntityFrameworkStores<FushanContext>()
                 .AddDefaultTokenProviders();
-
-            //services.AddSwaggerGen(options =>
-            //{
-            //    options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Music", Version = "v1" });
-
-            //    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        Description = "JWT containing userid claim",
-            //        Name = "Authorization",
-            //        In = ParameterLocation.Header,
-            //        Type = SecuritySchemeType.ApiKey,
-            //    });
-
-            //    var security =
-            //        new OpenApiSecurityRequirement
-            //        {
-            //            {
-            //                new OpenApiSecurityScheme
-            //                {
-            //                    Reference = new OpenApiReference
-            //                    {
-            //                        Id = "Bearer",
-            //                        Type = ReferenceType.SecurityScheme
-            //                    },
-            //                    UnresolvedReference = true
-            //                },
-            //                new List<string>()
-            //            }
-            //        };
-            //    options.AddSecurityRequirement(security);
-            //});
 
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddAuth(jwtSettings);

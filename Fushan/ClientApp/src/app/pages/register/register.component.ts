@@ -2,6 +2,8 @@ import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppService } from 'src/app/utils/services/app.service';
 import { ToastrService } from 'ngx-toastr';
+import { AccountService } from '@app/utils/services/account.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
-    private appService: AppService
+    private appService: AppService,
+    private accService: AccountService,
   ) {}
 
   ngOnInit() {
@@ -28,7 +31,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register() {
     if (this.registerForm.valid) {
-      this.appService.register();
+      this.accService.register(this.registerForm.value)
+        .pipe(first())
+        .subscribe((data) => {
+          console.log(data);
+        });
     } else {
       this.toastr.error('Hello world!', 'Toastr fun!');
     }

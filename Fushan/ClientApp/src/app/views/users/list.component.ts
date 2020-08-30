@@ -2,25 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
+  form: FormGroup;
   users = null;
-  items = [];
+  items: any;
   pageOfItems: Array<any>;
-  params = {
-    page: 1,
-    rows: 10,
-    sortBy: "createdOn",
-    orderBy: "ASC"
-  };
 
-    constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
 
+    this.form = this.formBuilder.group({
+      page: [1, Validators.required],
+      rows: [10, Validators.required],
+      sortBy: ["createdOn", Validators.required],
+      orderBy: ["ASC", Validators.required]
+    });
 
-    this.getUsers(this.params);
+    this.getUsers(this.form.value);
     }
 
     deleteUser(id: string) {
@@ -34,9 +38,9 @@ export class ListComponent implements OnInit {
   }
 
   getUsers(params: any) {
-    return this.accountService.getAll(params)
+    return this.accountService.getAll(this.form.value)
       .pipe(first())
-      .subscribe(users => this.items = this.users = users);
+      .subscribe(table => this.items = this.users = table.table);
   }
 
   onChangePage(pageOfItems: Array<any>) {

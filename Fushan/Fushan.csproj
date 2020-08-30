@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
       <PrivateAssets>all</PrivateAssets>
@@ -51,6 +52,8 @@
     <None Remove="ClientApp\src\app\account\login.component.ts" />
     <None Remove="ClientApp\src\app\account\register.component.html" />
     <None Remove="ClientApp\src\app\account\register.component.ts" />
+    <None Remove="ClientApp\src\app\views\users\layout.component.html" />
+    <None Remove="ClientApp\src\app\views\users\layout.component.ts" />
     <None Remove="ClientApp\src\app\_components\alert.component.html" />
     <None Remove="ClientApp\src\app\_components\alert.component.ts" />
     <None Remove="ClientApp\src\app\_components\index.ts" />

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { AppService } from '../../utils/services/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from '../../utils/services/account.service';
+import { AccountService } from '@app/utils/services/account.service';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 
