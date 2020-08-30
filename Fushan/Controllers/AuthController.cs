@@ -114,7 +114,8 @@ namespace Fushan.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_jwtSettings.ExpirationInDays));
+            //var expires = DateTime.Now.AddDays(Convert.ToDouble(_jwtSettings.ExpirationInDays));
+            var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.ExpirationInDays));
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
