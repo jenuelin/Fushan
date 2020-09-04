@@ -128,7 +128,7 @@ namespace DataServices.Migrations
                     b.Property<DateTimeOffset>("UpdatedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("UserID")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -165,6 +165,9 @@ namespace DataServices.Migrations
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Memo")
                         .HasColumnType("nvarchar(max)");
 
@@ -183,8 +186,8 @@ namespace DataServices.Migrations
                     b.Property<Guid?>("UpperDepartmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("UpperId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

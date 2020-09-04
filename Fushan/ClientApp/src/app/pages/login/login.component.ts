@@ -42,12 +42,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate([this.returnUrl]);
           },
           error => {
-            this.toastr.error('錯誤訊息', error);
+            this.toastr.error(error, '錯誤訊息');
             //this.alertService.error(error);
             //this.loading = false;
           });
     } else {
-      this.toastr.error('錯誤訊息', '請輸入正確帳號密碼');
+      this.toastr.error('請輸入正確帳號密碼', '錯誤訊息');
     }
   }
 

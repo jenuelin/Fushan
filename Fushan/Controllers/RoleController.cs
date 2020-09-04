@@ -32,7 +32,7 @@ namespace Fushan.Controllers
         {
             if (string.IsNullOrWhiteSpace(roleName))
             {
-                return BadRequest("Role name should be provided.");
+                return BadRequest(new { message = "Role name should be provided." });
             }
 
             var newRole = new Role

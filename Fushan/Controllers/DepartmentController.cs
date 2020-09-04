@@ -1,13 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using DataServices.Model;
 using DataServices.Services;
+using Fushan.Extensions;
+using Fushan.Mapping;
 using Messages;
 using Messages.Auth;
+using Messages.Department;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,6 +51,29 @@ namespace Fushan.Controllers
             await _department.CreateDepartment(department);
 
             return new OkObjectResult("Account created");
+        }
+
+        [HttpGet]
+        public async Task<DepartmentResponse> GetAll([FromQuery] GetDepartmentsRequest request)
+        {
+            //TODO: 把config改成DI方式
+            //var config = new MapperConfiguration(cfg => {
+            //    cfg.AddProfile<MappingProfile>();
+            //});
+            var departments = _department.GetDepartmentsQuery().Where(request.DepartmentId, x => x.DepartmentId == request.DepartmentId)
+                .Where(request.Name, x => x.Name == request.Name);
+            departments = departments.OrderByDynamic(request.SortBy, request.IsDesc);
+            var result = await PaginatedIQueryable<Department>.CreateAsync(departments.AsNoTracking(), request.Page, request.Rows);
+            var userMappers = await result.Item.ProjectTo<DepartmentModel>(MappingProfile.Config).ToArrayAsync();
+
+            return new DepartmentResponse
+            {
+                Valid = true,
+                Count = result.Count,
+                PagePageIndex = result.PageIndex,
+                TotalPages = result.TotalPages,
+                table = userMappers
+            };
         }
     }
 }

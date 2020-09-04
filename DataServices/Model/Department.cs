@@ -1,5 +1,5 @@
-﻿using System;
-using Configration.Enums;
+﻿using Configration.Enums;
+using System;
 
 namespace DataServices.Model
 {
@@ -7,7 +7,8 @@ namespace DataServices.Model
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string UserID { get; set; }
+        public string DepartmentId { get; set; }
+        public Guid? UpperId { get; set; }
         public virtual Department UpperDepartment { get; set; }
         public StatusEnum Status { get; set; }
         /// <summary>

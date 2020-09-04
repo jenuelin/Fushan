@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AccountService } from './utils/services/account.service';
-import { User } from './_models';
+import { User } from '@shared/_models';
 
 @Component({
   selector: 'app',

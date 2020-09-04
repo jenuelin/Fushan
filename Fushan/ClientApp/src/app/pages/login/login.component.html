@@ -1,11 +1,11 @@
 <div class="login-box">
   <div class="login-logo">
-    <a [routerLink]="['/']"><b>Admin</b>LTE</a>
+    <a [routerLink]="['/']"><b>Fushan</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">登入</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="input-group mb-3">
@@ -48,7 +48,7 @@
             <app-button
               [type]="'submit'"
               [block]="true"
-              [text]="'Sign In'"
+              [text]="'登入'"
               [loading]="isAuthLoading"
             ></app-button>
           </div>
@@ -72,7 +72,7 @@
       </p>
       <p class="mb-0">
         <a [routerLink]="['/register']" class="text-center"
-          >Register a new membership</a
+          >註冊</a
         >
       </p>
     </div>

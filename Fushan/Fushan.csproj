@@ -29,6 +29,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NSwag.AspNetCore" Version="13.7.0" />
   </ItemGroup>
 
@@ -52,11 +56,11 @@
     <None Remove="ClientApp\src\app\account\login.component.ts" />
     <None Remove="ClientApp\src\app\account\register.component.html" />
     <None Remove="ClientApp\src\app\account\register.component.ts" />
-    <None Remove="ClientApp\src\app\views\users\layout.component.html" />
-    <None Remove="ClientApp\src\app\views\users\layout.component.ts" />
-    <None Remove="ClientApp\src\app\_components\alert.component.html" />
-    <None Remove="ClientApp\src\app\_components\alert.component.ts" />
-    <None Remove="ClientApp\src\app\_components\index.ts" />
+    <None Remove="ClientApp\src\app\views\user\layout.component.html" />
+    <None Remove="ClientApp\src\app\views\user\layout.component.ts" />
+    <None Remove="ClientApp\src\app\shared\_components\alert.component.html" />
+    <None Remove="ClientApp\src\app\shared\_components\alert.component.ts" />
+    <None Remove="ClientApp\src\app\shared\_components\index.ts" />
     <None Remove="ClientApp\src\app\_helpers\auth.guard.ts" />
   </ItemGroup>
 

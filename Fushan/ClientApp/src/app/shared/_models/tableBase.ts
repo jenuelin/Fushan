@@ -6,5 +6,5 @@ export class TableList<T> {
   count: number;
   pagePageIndex: number;
   totalPages: number;
-  table: TableBase;
+  table: T;
 }

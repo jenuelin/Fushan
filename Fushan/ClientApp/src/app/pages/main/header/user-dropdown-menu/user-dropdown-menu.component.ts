@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { AppService } from 'src/app/utils/services/app.service';
 import { AccountService } from '@utils/services/account.service';
+import { User } from '@shared/_models';
 
 @Component({
   selector: 'app-user-dropdown-menu',
@@ -15,7 +16,7 @@ import { AccountService } from '@utils/services/account.service';
   styleUrls: ['./user-dropdown-menu.component.scss'],
 })
 export class UserDropdownMenuComponent implements OnInit {
-  public user;
+  public user: User;
 
   @ViewChild('dropdownMenu', { static: false }) dropdownMenu;
   @HostListener('document:click', ['$event'])
@@ -29,11 +30,13 @@ export class UserDropdownMenuComponent implements OnInit {
     private elementRef: ElementRef,
     private renderer: Renderer2,
     private appService: AppService,
-    private accService: AccountService
-  ) {}
+    private accountService: AccountService
+  ) {
+    this.user = this.accountService.userValue;
+  }
 
   ngOnInit(): void {
-    this.user = this.appService.user;
+    //this.user = this.appService.user;
   }
 
   toggleDropdownMenu() {
@@ -53,6 +56,6 @@ export class UserDropdownMenuComponent implements OnInit {
   }
 
   logout() {
-    this.accService.logout();
+    this.accountService.logout();
   }
 }

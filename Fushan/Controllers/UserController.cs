@@ -1,18 +1,17 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DataServices.Model;
 using DataServices.Services;
 using Fushan.Extensions;
 using Fushan.Helpers;
 using Fushan.Mapping;
-using Messages;
 using Messages.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -59,13 +58,14 @@ namespace Fushan.Controllers
             //var config = new MapperConfiguration(cfg => {
             //    cfg.AddProfile<MappingProfile>();
             //});
-            var users = _userManager.Users.Where(request.UserID, x => x.UserID == request.UserID)
+            var users = _userManager.Users.Where(request.UserID, x => x.UserId == request.UserID)
                 .Where(request.UserName, x => x.UserName == request.UserName);
             users = users.OrderByDynamic(request.SortBy, request.IsDesc);
             var result = await PaginatedIQueryable<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows);
-            var userMappers = result.Item.ProjectTo<AppUserModel>(MappingProfile.Config).ToArray();
+            var userMappers = await result.Item.ProjectTo<AppUserModel>(MappingProfile.Config).ToArrayAsync();
 
-            return new AppUserResponse { 
+            return new AppUserResponse
+            {
                 Valid = true,
                 Count = result.Count,
                 PagePageIndex = result.PageIndex,

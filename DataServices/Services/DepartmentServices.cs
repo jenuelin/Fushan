@@ -1,16 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DataServices.Db;
+﻿using DataServices.Db;
 using DataServices.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DataServices.Services
 {
     public interface IDepartment
     {
         Task<Department> GetDepartment(Guid id);
+        Task<Department[]> GetDepartments(Expression<Func<Department, bool>> expression);
         Task<Department[]> GetDepartments();
+
+        IQueryable<Department> GetDepartmentsQuery();
 
         Task CreateDepartment(Department request);
 
@@ -36,9 +40,9 @@ namespace DataServices.Services
             return _repository.Departments.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        Task<Department[]> IDepartment.GetDepartments()
+        Task<Department[]> IDepartment.GetDepartments(Expression<Func<Department, bool>> expression)
         {
-            return _repository.Departments.AsNoTracking().ToArrayAsync();
+            return _repository.Departments.Where(expression).AsNoTracking().ToArrayAsync();
         }
 
         Task IDepartment.CreateDepartment(Department department)
@@ -58,6 +62,16 @@ namespace DataServices.Services
             var department = _repository.Departments.FirstOrDefault(m => m.Id == id);
             _repository.Delete(department);
             return _repository.SaveChangesAsync();
+        }
+
+        Task<Department[]> IDepartment.GetDepartments()
+        {
+            return _repository.Departments.AsNoTracking().ToArrayAsync();
+        }
+
+        IQueryable<Department> IDepartment.GetDepartmentsQuery()
+        {
+            return _repository.Departments;
         }
     }
 }

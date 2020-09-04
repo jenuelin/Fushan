@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-using Configration.Enums;
-using Newtonsoft.Json.Converters;
+﻿using Configration.Enums;
+using System;
 
 namespace Messages.Account
 {
@@ -14,9 +10,10 @@ namespace Messages.Account
 
     public class AppUserModel
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string UserID { get; set; }
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public int Sex { get; set; }
         public SexEnum SexString { get; set; }
         public Guid? DepartmentId { get; set; }

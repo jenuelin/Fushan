@@ -60,10 +60,10 @@ namespace Fushan.Controllers
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(UserLoginRequest request)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == request.Email);
+            var user = _userManager.Users.SingleOrDefault(u => u.Email == request.Email || u.UserName == request.Email);
             if (user is null)
             {
-                return NotFound("User not found");
+                return NotFound(new { message = "User not found" });
             }
 
             var userSigninResult = await _userManager.CheckPasswordAsync(user, request.Password);
@@ -81,7 +81,7 @@ namespace Fushan.Controllers
                 });
             }
 
-            return BadRequest("Email or password incorrect.");
+            return BadRequest(new { message = "Email or password incorrect." });
         }
 
         [Authorize]
@@ -114,8 +114,7 @@ namespace Fushan.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            //var expires = DateTime.Now.AddDays(Convert.ToDouble(_jwtSettings.ExpirationInDays));
-            var expires = DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.ExpirationInDays));
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(_jwtSettings.ExpirationInDays));
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,

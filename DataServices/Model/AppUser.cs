@@ -1,6 +1,6 @@
-﻿using System;
-using Configration.Enums;
+﻿using Configration.Enums;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace DataServices.Model
 {
@@ -9,7 +9,7 @@ namespace DataServices.Model
         /// <summary>
         /// 員工編號
         /// </summary>
-        public string UserID { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// 員工姓名
         /// </summary>

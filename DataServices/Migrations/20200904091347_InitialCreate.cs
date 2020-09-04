@@ -27,7 +27,8 @@ namespace DataServices.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    UserID = table.Column<string>(nullable: true),
+                    DepartmentId = table.Column<string>(nullable: true),
+                    UpperId = table.Column<Guid>(nullable: true),
                     UpperDepartmentId = table.Column<Guid>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Memo = table.Column<string>(nullable: true),
@@ -100,7 +101,7 @@ namespace DataServices.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    UserID = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     Sex = table.Column<int>(nullable: false),
                     DepartmentId = table.Column<Guid>(nullable: true),

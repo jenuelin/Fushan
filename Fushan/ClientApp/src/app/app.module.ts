@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UsersModule } from '@app/views/users/users.module';
+import { UsersModule } from '@app/views/user/users.module';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -11,6 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 //import { AlertComponent } from './_components';
+import { ConstantsService } from '@shared/_services';
+import { SharedModule } from '@shared/shared.module';
+
 import { HomeComponent } from './home';
 
 import { MainComponent } from './pages/main/main.component';
@@ -27,15 +30,23 @@ import { ToastrModule } from 'ngx-toastr';
 import { MessagesDropdownMenuComponent } from './pages/main/header/messages-dropdown-menu/messages-dropdown-menu.component';
 import { NotificationsDropdownMenuComponent } from './pages/main/header/notifications-dropdown-menu/notifications-dropdown-menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AppButtonComponent } from './_components/app-button/app-button.component';
+import { AppButtonComponent } from '@shared/_components/app-button/app-button.component';
 
 import { registerLocaleData } from '@angular/common';
-import localeEn from '@angular/common/locales/en';
+import localezhTw from '@angular/common/locales/zh-Hant';
 import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-menu/user-dropdown-menu.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { BreadcrumbComponent } from './_components/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '@shared/_components/breadcrumb/breadcrumb.component';
+import { User } from '@shared/_models';
+import { DepartmentModule } from './views/department/department.module';
+//import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-registerLocaleData(localeEn, 'en-EN');
+//import { PaginationComponent } from './_components/dataTable/pagination/pagination.component';
+//import { DataTableComponent } from './_components/data-table/data-table.component';
+//import { ItemComponent } from './_components/data-table/item/item.component';
+//import { JwPaginationModule } from 'jw-angular-pagination';
+
+registerLocaleData(localezhTw, 'zh-tw');
 
 @NgModule({
     imports: [
@@ -43,6 +54,7 @@ registerLocaleData(localeEn, 'en-EN');
         ReactiveFormsModule,
     HttpClientModule,
     UsersModule,
+    DepartmentModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BreadcrumbModule,
@@ -52,6 +64,9 @@ registerLocaleData(localeEn, 'en-EN');
       preventDuplicates: true,
     }),
     NgbModule,
+    SharedModule,
+    //NgxDatatableModule,
+    //JwPaginationModule,
     ],
     declarations: [
         AppComponent,
@@ -71,13 +86,18 @@ registerLocaleData(localeEn, 'en-EN');
       AppButtonComponent,
       UserDropdownMenuComponent,
       BreadcrumbComponent,
+      //PaginationComponent,
+      //DataTableComponent,
+      //ItemComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
         // provider used to create fake backend
-        fakeBackendProvider
+      fakeBackendProvider,
+      ConstantsService,
+        User
     ],
     bootstrap: [AppComponent]
 })

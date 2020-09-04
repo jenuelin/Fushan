@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService } from '@app/_services';
+import { AlertService, ConstantsService } from '@shared/_services';
 import { AccountService } from '@app/utils/services/account.service';
 
 @Component({ templateUrl: 'add-edit.component.html' })
@@ -19,7 +19,8 @@ export class AddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
-        private alertService: AlertService
+      private alertService: AlertService,
+      private constantsService: ConstantsService
     ) {}
 
     ngOnInit() {
@@ -27,16 +28,28 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
         
         // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
-        if (this.isAddMode) {
-            passwordValidators.push(Validators.required);
-        }
+        //const passwordValidators = [Validators.minLength(6)];
+        //if (this.isAddMode) {
+        //    passwordValidators.push(Validators.required);
+        //}
 
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+          userID: ['', Validators.required],
+          username: ['', Validators.required],
           email: ['', Validators.required],
-            password: ['', passwordValidators]
+          sex: ['0', Validators.required],
+          department: ['', Validators.required],
+          rank: ['', Validators.required],
+          level: ['', Validators.required],
+          employeeCategory: ['', Validators.required],
+          employmentStatus: ['', Validators.required],
+          onTheJobDay: ['', Validators.required],
+          resignationDay: [''],
+          phone: [''],
+          workPhone: [''],
+          birthday: [''],
+          nationality: [''],
+          memo: [''],
         });
 
         if (!this.isAddMode) {

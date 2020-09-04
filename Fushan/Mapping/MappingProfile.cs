@@ -2,6 +2,7 @@
 using DataServices.Model;
 using Messages;
 using Messages.Account;
+using Messages.Department;
 
 namespace Fushan.Mapping
 {
@@ -18,9 +19,10 @@ namespace Fushan.Mapping
             //CreateMap<MusicResource, Music>();
             //CreateMap<SaveMusicResource, Music>();
             //CreateMap<ArtistResource, Artist>();
+            CreateMap<GetDepartmentsRequest, Department>();
+            CreateMap<Department, DepartmentModel>();
             CreateMap<CreateUpdateDepartmentRequest, Department>();
-            CreateMap<RegistrationRequest, AppUser>()
-                .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));
+            CreateMap<RegistrationRequest, AppUser>();
             CreateMap<AppUser, AppUserModel>()
                 .ForMember(u => u.SexString, opt => opt.MapFrom(ur => ur.Sex))
                 .ForMember(u => u.Sex, opt => opt.MapFrom(ur => (int)ur.Sex));
