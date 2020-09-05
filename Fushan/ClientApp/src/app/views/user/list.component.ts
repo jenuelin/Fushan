@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 import { AccountService } from '@app/utils/services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PagingService } from '@shared/_services/paging.service';
+import { ConstantsService } from '@shared/_services'
 
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
@@ -14,7 +15,7 @@ export class ListComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private formBuilder: FormBuilder,
+    private constantsService: ConstantsService,
     private _pagingService: PagingService) { }
 
   ngOnInit() {
@@ -47,7 +48,7 @@ export class ListComponent implements OnInit {
   }
 
   getUsers(params: any, page: number) {
-    return this.accountService.getAll(params)
+    return this.accountService.getAll(params, this.constantsService.userApi.getAll)
       //.pipe(table => {
       //  this.items = this.users = table.table;
       //})

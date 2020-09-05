@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseService {
+export abstract class BaseService {
   public httpOptions = {
     headers: new HttpHeaders().set('Content-Type', 'application/json',)
   };
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
   getAll<T>(paging: Paging, route: string) {
     this.httpOptions["params"] = paging;
@@ -18,14 +18,17 @@ export class BaseService {
   }
 
   create<T>(obj: T, route: string) {
+    this.httpOptions["params"] = null;
     return this.http.post(route, obj, this.httpOptions);
   }
 
   update(params, route: string) {
+    this.httpOptions["params"] = null;
     return this.http.put(route, params);
   }
 
   delete(route: string) {
+    this.httpOptions["params"] = null;
     return this.http.delete(route);
   }
 }

@@ -8,6 +8,7 @@ export class ConstantsService {
   readonly distLocation: string = 'MyApplication/';
 
 
-  readonly departmentApi = { getAll: 'api/department', create: 'api/department', update: 'api/department/' };
+  readonly userApi = { getAll: '/api/user', create: '/api/user', update: '/api/user/' };
+  readonly departmentApi = { getAll: '/api/department', create: '/api/department', update: '/api/department/' };
   constructor() { }
 }

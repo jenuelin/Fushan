@@ -28,6 +28,7 @@
         "ionicons": "2.0.1",
         "jw-angular-pagination": "^1.2.0",
         "jw-paginate": "^1.0.4",
+        "ngx-spinner": "^10.0.1",
         "ngx-toastr": "^13.0.0",
         "primeicons": "^4.0.0",
         "primeng": "^10.0.0-rc.3",

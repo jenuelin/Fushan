@@ -7,6 +7,7 @@ using Fushan.Mapping;
 using Messages;
 using Messages.Auth;
 using Messages.Department;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ using System.Threading.Tasks;
 namespace Fushan.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class DepartmentController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
@@ -37,7 +38,7 @@ namespace Fushan.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateUpdateDepartmentRequest model)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var user = await _userManager.GetUserAsync(User);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
