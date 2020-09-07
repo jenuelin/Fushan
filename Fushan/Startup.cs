@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Text.Json.Serialization;
 using AutoMapper;
 using DataServices.Db;
 using DataServices.Model;
@@ -18,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Converters;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using System;
+using System.Linq;
 
 namespace Fushan
 {
@@ -33,9 +32,19 @@ namespace Fushan
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options => {
+            //services.Configure<IISServerOptions>(options =>
+            //{
+            //    options.AutomaticAuthentication = false;
+            //});
+            //services.Configure<IISOptions>(options =>
+            //{
+            //    options.ForwardClientCertificate = false;
+            //});
+            services.AddControllers(options =>
+            {
                 options.RespectBrowserAcceptHeader = true;
-            }).AddNewtonsoftJson(options => {
+            }).AddNewtonsoftJson(options =>
+            {
                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
             services.AddControllersWithViews();
