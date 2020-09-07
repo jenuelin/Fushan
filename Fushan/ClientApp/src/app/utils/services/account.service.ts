@@ -7,20 +7,22 @@ import { map, first } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User, Paging, UserTable, TableList } from '@shared/_models';
 import * as _ from 'lodash';
+import { BaseService } from './base.service';
 
 @Injectable({ providedIn: 'root' })
-export class AccountService {
+export class AccountService extends BaseService {
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
   //private headers: HttpHeaders = new HttpHeaders();
-  private httpOptions = {
-    headers: new HttpHeaders().set('Content-Type', 'application/json',)
-  };
+  //private httpOptions = {
+  //  headers: new HttpHeaders().set('Content-Type', 'application/json',)
+  //};
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    http: HttpClient
   ) {
+    super(http);
     let user = JSON.parse(localStorage.getItem('user'));
     this.userSubject = new BehaviorSubject<User>(user);
     this.user = this.userSubject.asObservable();
@@ -42,7 +44,7 @@ export class AccountService {
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
-        this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + _.get(user, 'token'));
+        //super.httpOptions.headers = super.httpOptions.headers.set('Authorization', 'Bearer ' + _.get(user, 'token'));
         this.userSubject.next(user);
         return user;
       }));
@@ -59,10 +61,10 @@ export class AccountService {
     return this.http.post('/api/user', user, this.httpOptions);
   }
 
-  getAll(paging: Paging) {
-    this.httpOptions["params"] = paging;
-    return this.http.get<TableList<UserTable>>(`${environment.apiUrl}/api/user`, this.httpOptions);
-  }
+  //getAll(paging: Paging) {
+  //  this.httpOptions["params"] = paging;
+  //  return this.http.get<TableList<UserTable>>(`${environment.apiUrl}/api/user`, this.httpOptions);
+  //}
 
   getById(id: string) {
     return this.http.get<User>(`/user/${id}`);
