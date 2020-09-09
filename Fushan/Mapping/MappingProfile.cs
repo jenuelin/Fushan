@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DataServices.Model;
 using Messages;
-using Messages.Account;
 using Messages.Department;
+using Messages.User;
 
 namespace Fushan.Mapping
 {
@@ -19,6 +19,10 @@ namespace Fushan.Mapping
             //CreateMap<MusicResource, Music>();
             //CreateMap<SaveMusicResource, Music>();
             //CreateMap<ArtistResource, Artist>();
+            CreateMap<AppUser, CreateUpdateUserRequest>();
+            CreateMap<CreateUpdateUserRequest, AppUser>();
+            CreateMap<AppUser, AppUserModel>();
+            CreateMap<AppUserModel, AppUser>();
             CreateMap<GetDepartmentsRequest, Department>();
             CreateMap<Department, DepartmentModel>();
             CreateMap<CreateUpdateDepartmentRequest, Department>();
@@ -26,7 +30,6 @@ namespace Fushan.Mapping
             CreateMap<AppUser, AppUserModel>()
                 .ForMember(u => u.SexString, opt => opt.MapFrom(ur => ur.Sex))
                 .ForMember(u => u.Sex, opt => opt.MapFrom(ur => (int)ur.Sex));
-
         }
 
         public static MapperConfiguration Config = new MapperConfiguration(cfg =>

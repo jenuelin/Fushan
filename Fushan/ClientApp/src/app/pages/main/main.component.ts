@@ -20,11 +20,11 @@ export class MainComponent implements OnInit {
   }
 
   mainSidebarHeight(height) {
-    // this.renderer.setStyle(
-    //   this.contentWrapper.nativeElement,
-    //   'min-height',
-    //   height - 114 + 'px'
-    // );
+     this.renderer.setStyle(
+       this.contentWrapper.nativeElement,
+       'min-height',
+       height - 114 + 'px'
+     );
   }
 
   toggleMenuSidebar() {

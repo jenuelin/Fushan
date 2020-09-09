@@ -1,7 +1,7 @@
 ﻿using Configration.Enums;
 using System;
 
-namespace Messages.Account
+namespace Messages.User
 {
     public class AppUserResponse : PageableResponse
     {
@@ -21,9 +21,11 @@ namespace Messages.Account
         public string Rank { get; set; }
         public string Level { get; set; }
         public EmployeeCategoryEnum EmployeeCategory { get; set; }
+
         //[JsonConverter(typeof(StringEnumConverter))]
         //public EmployeeCategoryEnum EmployeeCategoryString { get; set; }
         public EmploymentStatusEnum EmploymentStatus { get; set; }
+
         public string OnTheJobDay { get; set; }
         public StatusEnum Status { get; set; }
         public string ResignationDay { get; set; }

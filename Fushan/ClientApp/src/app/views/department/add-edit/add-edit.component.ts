@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, ConstantsService } from '@shared/_services';
 import { first } from 'rxjs/operators';
-import { DepartmentService } from '../../../utils/services/department.service';
+import { DepartmentService } from '@utils/services/department.service';
 
 @Component({
   selector: 'app-add-edit',
@@ -35,6 +35,8 @@ export class AddEditComponent implements OnInit {
       memo: [''],
     });
 
+    if (!this.isAddMode) {
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -66,10 +68,6 @@ export class AddEditComponent implements OnInit {
         data => {
           this.alertService.success('Department added successfully', { keepAfterRouteChange: true });
           this.router.navigate(['.', { relativeTo: this.route }]);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
         });
   }
 
@@ -86,6 +84,4 @@ export class AddEditComponent implements OnInit {
           this.loading = false;
         });
   }
-
-
 }

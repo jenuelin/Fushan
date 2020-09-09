@@ -1,4 +1,16 @@
-﻿
+﻿using AutoMapper;
+using DataServices.Model;
+using DataServices.Services;
+using Fushan.Helpers;
+using Messages;
+using Messages.User;
+using Messages.Auth;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,18 +18,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using DataServices.Model;
-using DataServices.Services;
-using Fushan.Helpers;
-using Messages;
-using Messages.Account;
-using Messages.Auth;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Fushan.Controllers
 {
@@ -37,6 +37,7 @@ namespace Fushan.Controllers
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
         }
+
         // POST api/accounts
         [HttpPost("SignUp")]
         public async Task<IActionResult> Post([FromBody] RegistrationRequest model)
@@ -57,8 +58,8 @@ namespace Fushan.Controllers
             return new OkObjectResult("Account created");
         }
 
-        [HttpPost("SignIn")]
-        public async Task<IActionResult> SignIn(UserLoginRequest request)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(UserLoginRequest request)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Email == request.Email || u.UserName == request.Email);
             if (user is null)
@@ -84,6 +85,14 @@ namespace Fushan.Controllers
             return BadRequest(new { message = "Email or password incorrect." });
         }
 
+        [HttpPost("Logout")]
+        [Authorize]
+        public IActionResult Logout()
+        {
+            _ = HttpContext.SignOutAsync().ConfigureAwait(false);
+            return Ok("logout");
+        }
+
         [Authorize]
         [HttpGet("CheckAuth")]
         public IActionResult CheckAuth()
@@ -97,10 +106,8 @@ namespace Fushan.Controllers
             return Ok("CheckAuth2");
         }
 
-
         private string GenerateJwt(AppUser user, IList<string> roles)
         {
-
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),

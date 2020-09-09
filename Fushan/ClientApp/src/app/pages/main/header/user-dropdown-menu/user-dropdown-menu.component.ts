@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { AppService } from 'src/app/utils/services/app.service';
 import { AccountService } from '@utils/services/account.service';
-import { User } from '@shared/_models';
+import { Login } from '@shared/_models';
 
 @Component({
   selector: 'app-user-dropdown-menu',
@@ -16,7 +16,7 @@ import { User } from '@shared/_models';
   styleUrls: ['./user-dropdown-menu.component.scss'],
 })
 export class UserDropdownMenuComponent implements OnInit {
-  public user: User;
+  public user: Login;
 
   @ViewChild('dropdownMenu', { static: false }) dropdownMenu;
   @HostListener('document:click', ['$event'])

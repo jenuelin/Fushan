@@ -6,4 +6,8 @@ export class UserTable {
   sexString: string;
   rank: string;
   level: string;
+  createdOn: string;
+  updatedOn: string;
+  createdByUsername: string;
+  updatedByUsername: string;
 }

@@ -5,4 +5,8 @@ export class DepartmentTable {
   upperDepartmentName: string;
   status: string;
   statusString: string;
+  createdOn: string;
+  updatedOn: string;
+  createdByUsername: string;
+  updatedByUsername: string;
 }

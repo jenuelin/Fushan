@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '@app/utils/services/account.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { User } from '@shared/_models';
+import { Registration } from '@shared/_models';
 
 @Component({
   selector: 'app-register',
@@ -22,8 +22,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private accService: AccountService,
     private router: Router,
-    private user: User,
-  ) {}
+    private user: Registration,
+  ) { }
 
   ngOnInit() {
     this.renderer.addClass(document.querySelector('app'), 'register-page');
@@ -52,8 +52,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log(data);
           this.router.navigate(['login']);
         }, error => {
-            this.goRegister = false;
-            this.toastr.error(error.DuplicateUserName, "錯誤");
+          this.goRegister = false;
+          this.toastr.error(error.DuplicateUserName, "錯誤");
         });
     } else {
       //this.toastr.error('Hello world!', 'Toastr fun!');

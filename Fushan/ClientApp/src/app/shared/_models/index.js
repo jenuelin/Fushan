@@ -10,3 +10,4 @@ export * from './tableRequestBase';
 export * from './userRequest';
 export * from './departmentRequest';
 export * from './registration';
+//# sourceMappingURL=index.js.map

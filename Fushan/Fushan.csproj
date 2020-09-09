@@ -56,16 +56,39 @@
     <None Remove="ClientApp\src\app\account\login.component.ts" />
     <None Remove="ClientApp\src\app\account\register.component.html" />
     <None Remove="ClientApp\src\app\account\register.component.ts" />
+    <None Remove="ClientApp\src\app\utils\resolves\departments.resolver.ts" />
+    <None Remove="ClientApp\src\app\utils\resolves\user.resolver.ts" />
+    <None Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
+    <None Remove="ClientApp\src\app\utils\services\app.service.ts" />
     <None Remove="ClientApp\src\app\views\user\layout.component.html" />
     <None Remove="ClientApp\src\app\views\user\layout.component.ts" />
     <None Remove="ClientApp\src\app\shared\_components\alert.component.html" />
     <None Remove="ClientApp\src\app\shared\_components\alert.component.ts" />
     <None Remove="ClientApp\src\app\shared\_components\index.ts" />
-    <None Remove="ClientApp\src\app\_helpers\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\departmentRequest.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\registration.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableBase.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableRequestBase.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\user.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\userRequest.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\utils\resolves\index.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DataServices\DataServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\utils\resolves\user.resolver.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -99,7 +122,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>

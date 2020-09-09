@@ -5,11 +5,12 @@ using DataServices.Services;
 using Fushan.Extensions;
 using Fushan.Helpers;
 using Fushan.Mapping;
-using Messages.Account;
+using Messages.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +25,7 @@ namespace Fushan.Controllers
         private readonly IMember _member;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+
         //private readonly IHubContext<StronglyTypedChatHubBase, IChatClient> _hub;
         public UserController(IMember member, UserManager<AppUser> userManager, IMapper mapper)
         {
@@ -31,8 +33,9 @@ namespace Fushan.Controllers
             _mapper = mapper;
             _member = member;
         }
+
         // POST api/accounts
-        [HttpPost, AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] RegistrationRequest model)
         {
             if (!ModelState.IsValid)
@@ -59,9 +62,9 @@ namespace Fushan.Controllers
             //    cfg.AddProfile<MappingProfile>();
             //});
             var users = _userManager.Users.Where(request.UserID, x => x.UserId == request.UserID)
-                .Where(request.UserName, x => x.UserName == request.UserName);
+                .Where(request.UserName, x => x.UserName.Contains(request.UserName));
             users = users.OrderByDynamic(request.SortBy, request.IsDesc);
-            var result = await PaginatedIQueryable<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows);
+            var result = await PaginatedIQueryableExtensions<AppUser>.CreateAsync(users.AsNoTracking(), request.Page, request.Rows, request.ShowAll);
             var userMappers = await result.Item.ProjectTo<AppUserModel>(MappingProfile.Config).ToArrayAsync();
 
             return new AppUserResponse
@@ -74,6 +77,27 @@ namespace Fushan.Controllers
             };
         }
 
+        [HttpGet("{id}")]
+        public async Task<AppUserModel> Get(Guid id)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<AppUser, AppUserModel>(user);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(CreateUpdateUserRequest request)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (user == null)
+            {
+                throw new Exception("can't find user");
+            }
+
+            _mapper.Map(request, user);
+
+            var result = await _userManager.UpdateAsync(user);
+            return Ok(result.Succeeded);
+        }
 
         [HttpDelete]
         [Route("{id}")]

@@ -5,16 +5,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersModule } from '@app/views/user/users.module';
 
 // used to create fake backend
-import { fakeBackendProvider } from './_helpers';
+import { fakeBackendProvider } from '@shared/_helpers';
 
 import { AppRoutingModule } from './app-routing.module';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { JwtInterceptor, ErrorInterceptor } from '@shared/_helpers';
 import { AppComponent } from './app.component';
 //import { AlertComponent } from './_components';
 import { ConstantsService } from '@shared/_services';
 import { SharedModule } from '@shared/shared.module';
 
-import { HomeComponent } from './home';
+//import { HomeComponent } from './home';
 
 import { MainComponent } from './pages/main/main.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -37,8 +37,8 @@ import localezhTw from '@angular/common/locales/zh-Hant';
 import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-menu/user-dropdown-menu.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadcrumbComponent } from '@shared/_components/breadcrumb/breadcrumb.component';
-import { User } from '@shared/_models';
 import { DepartmentModule } from './views/department/department.module';
+import { Login, TableRequestBase } from '@shared/_models';
 //import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 //import { PaginationComponent } from './_components/dataTable/pagination/pagination.component';
@@ -49,9 +49,9 @@ import { DepartmentModule } from './views/department/department.module';
 registerLocaleData(localezhTw, 'zh-tw');
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     UsersModule,
     DepartmentModule,
@@ -67,38 +67,39 @@ registerLocaleData(localezhTw, 'zh-tw');
     SharedModule,
     //NgxDatatableModule,
     //JwPaginationModule,
-    ],
-    declarations: [
-        AppComponent,
-        //AlertComponent,
-      HomeComponent,
-      MainComponent,
-      LoginComponent,
-      HeaderComponent,
-      FooterComponent,
-      MenuSidebarComponent,
-      BlankComponent,
-      ProfileComponent,
-      RegisterComponent,
-      DashboardComponent,
-      MessagesDropdownMenuComponent,
-      NotificationsDropdownMenuComponent,
-      AppButtonComponent,
-      UserDropdownMenuComponent,
-      BreadcrumbComponent,
-      //PaginationComponent,
-      //DataTableComponent,
-      //ItemComponent,
-    ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+  declarations: [
+    AppComponent,
+    //AlertComponent,
+    //HomeComponent,
+    MainComponent,
+    LoginComponent,
+    HeaderComponent,
+    FooterComponent,
+    MenuSidebarComponent,
+    BlankComponent,
+    ProfileComponent,
+    RegisterComponent,
+    DashboardComponent,
+    MessagesDropdownMenuComponent,
+    NotificationsDropdownMenuComponent,
+    AppButtonComponent,
+    UserDropdownMenuComponent,
+    BreadcrumbComponent,
+    //PaginationComponent,
+    //DataTableComponent,
+    //ItemComponent,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
-        // provider used to create fake backend
-      fakeBackendProvider,
-      ConstantsService,
-        User
-    ],
-    bootstrap: [AppComponent]
+    // provider used to create fake backend
+    fakeBackendProvider,
+    ConstantsService,
+    TableRequestBase,
+    Login,
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { };

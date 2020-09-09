@@ -1,4 +1,4 @@
-﻿namespace Messages.Account
+﻿namespace Messages.User
 {
     public class GetUsersRequest : PageableRequest
     {

@@ -12,9 +12,15 @@ export abstract class BaseService {
   };
   constructor(public http: HttpClient) { }
 
-  getAll<T>(paging: Paging, route: string) {
-    this.httpOptions["params"] = paging;
+  getAll<T>(params: any, route: string) {
+    this.httpOptions["params"] = params;
     return this.http.get<TableList<T>>(route, this.httpOptions);
+  }
+
+  get<T>(route: string) {
+    return this.http.get<T>(route);
+    //this.httpOptions["params"] = params;
+    //return this.http.get<TableList<T>>(route, this.httpOptions);
   }
 
   create<T>(obj: T, route: string) {
@@ -23,7 +29,7 @@ export abstract class BaseService {
   }
 
   update(params, route: string) {
-    this.httpOptions["params"] = null;
+    this.httpOptions["params"] = params;
     return this.http.put(route, params);
   }
 

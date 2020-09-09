@@ -1,11 +1,20 @@
 export class User {
-    id: string;
+  id: string;
   email: string;
-  password: string;
-  retypePassword: string;
   username: string;
-    firstName: string;
-    lastName: string;
-  token: string;
-  terms: boolean;
+  firstName: string;
+  lastName: string;
+  rank: string;
+  level: boolean;
+  employeeCategory: number;
+  employmentStatus: number;
+  onTheJobDay: string;
+  status: number;
+  resignationDay: string;
+  phone: string;
+  workPhone: string;
+  idNumber: string;
+  birthday: string;
+  nationality: string;
+  memo: string;
 }

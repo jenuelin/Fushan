@@ -35,6 +35,7 @@ namespace Fushan.Controllers
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
         }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateUpdateDepartmentRequest model)
         {
@@ -57,14 +58,10 @@ namespace Fushan.Controllers
         [HttpGet]
         public async Task<DepartmentResponse> GetAll([FromQuery] GetDepartmentsRequest request)
         {
-            //TODO: 把config改成DI方式
-            //var config = new MapperConfiguration(cfg => {
-            //    cfg.AddProfile<MappingProfile>();
-            //});
             var departments = _department.GetDepartmentsQuery().Where(request.DepartmentId, x => x.DepartmentId == request.DepartmentId)
-                .Where(request.Name, x => x.Name == request.Name);
+                .Where(request.Name, x => x.Name.Contains(request.Name));
             departments = departments.OrderByDynamic(request.SortBy, request.IsDesc);
-            var result = await PaginatedIQueryable<Department>.CreateAsync(departments.AsNoTracking(), request.Page, request.Rows);
+            var result = await PaginatedIQueryableExtensions<Department>.CreateAsync(departments.AsNoTracking(), request.Page, request.Rows, request.ShowAll);
             var userMappers = await result.Item.ProjectTo<DepartmentModel>(MappingProfile.Config).ToArrayAsync();
 
             return new DepartmentResponse

@@ -45,8 +45,6 @@
     <a routerLink="/users" class="btn btn-link">Cancel</a>
   </div>
 </form>-->
-
-
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
@@ -100,12 +98,11 @@
                   <!-- select -->
                   <div class="form-group">
                     <label>部門</label>
-                    <select class="form-control">
-                      <option>option 1</option>
-                      <option>option 2</option>
-                      <option>option 3</option>
-                      <option>option 4</option>
-                      <option>option 5</option>
+                    <select class="form-control" formControlName="department">
+                      <option [ngValue]="null" disabled>請選擇</option>
+                      <option *ngFor="let item of departments" [ngValue]="item.id">
+                        {{ item.name }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -123,38 +120,68 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">性別</label>
-                <input type="text" formControlName="sex" class="form-control" id="sex" placeholder="Enter 性別">
+                <label for="exampleInputPassword1">職級</label>
+                <input type="text" formControlName="rank" class="form-control" id="rank" placeholder="Enter 職級">
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">部門</label>
-                <input type="text" formControlName="department" class="form-control" id="department" placeholder="Enter 部門">
+                <label for="exampleInputPassword1">職等</label>
+                <input type="text" formControlName="level" class="form-control" id="level" placeholder="Enter 職等">
               </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">性別</label>
-                <input type="text" formControlName="sex" class="form-control" id="sex" placeholder="性別">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleInputFile">
-                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- select -->
+                  <div class="form-group">
+                    <label>員工類別</label>
+                    <select class="form-control" formControlName="employeeCategory">
+                      <option [ngValue]="null" disabled>請選擇</option>
+                      <option *ngFor="let item of employeeCategories" [ngValue]="item.id">
+                        {{ item.name }}
+                      </option>
+                    </select>
                   </div>
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="">Upload</span>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>就職狀態</label>
+                    <select class="form-control" formControlName="employmentStatus">
+                      <option [ngValue]="null" disabled>請選擇</option>
+                      <option *ngFor="let item of employmentStatus" [ngValue]="item.id">
+                        {{ item.name }}
+                      </option>
+                    </select>
                   </div>
                 </div>
               </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <div class="form-group">
+                <label for="exampleInputPassword1">到職日</label>
+                <input type="date" formControlName="onTheJobDay" class="form-control" id="onTheJobDay" placeholder="Enter 到職日">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">狀態</label>
+                <input type="text" formControlName="status" class="form-control" id="status" placeholder="Enter 狀態">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">離職日</label>
+                <input type="date" formControlName="resignationDay" class="form-control" id="resignationDay" placeholder="Enter 離職日">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">手機</label>
+                <input type="tel" formControlName="phone" class="form-control" id="phone" placeholder="Enter 手機">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">公司電話</label>
+                <input type="tel" formControlName="workPhone" class="form-control" id="workPhone" placeholder="Enter 公司電話">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">身分證號</label>
+                <input type="text" formControlName="idNumber" class="form-control" id="idNumber" placeholder="Enter 身分證號">
               </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
               <button type="submit" class="btn btn-primary">Submit</button>
+              <button routerLink="..">取消</button>
             </div>
           </form>
         </div>

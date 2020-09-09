@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { AppService } from 'src/app/utils/services/app.service';
+import { Login } from '@shared/_models';
+import { AccountService } from '@utils/services/account.service';
 
 @Component({
   selector: 'app-menu-sidebar',
@@ -16,9 +17,13 @@ import { AppService } from 'src/app/utils/services/app.service';
 export class MenuSidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('mainSidebar', { static: false }) mainSidebar;
   @Output() mainSidebarHeight: EventEmitter<any> = new EventEmitter<any>();
-  constructor(public appService: AppService) {}
 
-  ngOnInit() {}
+  public user: Login;
+  constructor(public accountService: AccountService) {
+    this.user = this.accountService.userValue;
+  }
+
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.mainSidebarHeight.emit(this.mainSidebar.nativeElement.offsetHeight);

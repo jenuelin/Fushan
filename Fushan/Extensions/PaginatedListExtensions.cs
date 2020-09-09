@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Fushan
 {
-    public class PaginatedIQueryable<T>
+    public class PaginatedIQueryableExtensions<T>
     {
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
@@ -19,7 +19,7 @@ namespace Fushan
 
         //    this.AddRange(items);
         //}
-        public PaginatedIQueryable(IQueryable<T> item, int count, int pageIndex, int pageSize)
+        public PaginatedIQueryableExtensions(IQueryable<T> item, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
             Count = count;
@@ -43,11 +43,11 @@ namespace Fushan
             }
         }
 
-        public static async Task<PaginatedIQueryable<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
+        public static async Task<PaginatedIQueryableExtensions<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, bool showAll = false)
         {
             var count = await source.CountAsync();
-            var item = source.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-            return new PaginatedIQueryable<T>(item, count, pageIndex, pageSize);
+            var item = showAll ? source.Skip((pageIndex - 1) * pageSize).Take(pageSize) : source;
+            return new PaginatedIQueryableExtensions<T>(item, count, pageIndex, pageSize);
         }
 
         //public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)

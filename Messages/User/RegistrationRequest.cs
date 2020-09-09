@@ -1,4 +1,4 @@
-﻿namespace Messages.Account
+﻿namespace Messages.User
 {
     public class RegistrationRequest
     {
@@ -22,6 +22,5 @@
         //public string Birthday { get; set; }
         //public string Nationality { get; set; }
         //public string Memo { get; set; }
-
     }
 }

@@ -6,7 +6,7 @@ import { DepartmentRoutingModule } from './department-routing.module';
 import { ListComponent } from './list/list.component';
 import { AddEditComponent } from './add-edit/add-edit.component';
 import { SharedModule } from '@shared/shared.module';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { SharedModule } from '@shared/shared.module';
     CommonModule,
     ReactiveFormsModule,
     DepartmentRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class DepartmentModule { }
