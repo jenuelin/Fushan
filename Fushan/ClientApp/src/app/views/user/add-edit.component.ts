@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { AlertService, ConstantsService } from '@shared/_services';
 import { AccountService } from '@app/utils/services/account.service';
+import moment from 'moment';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -26,9 +28,11 @@ export class AddEditComponent implements OnInit {
     private accountService: AccountService,
     private alertService: AlertService,
     private constantsService: ConstantsService,
-    location: Location
+    location: Location,
+    private _localeService: BsLocaleService
   ) {
     this.location = location;
+    //this._localeService.use('zh-cn');
   }
 
   ngOnInit() {
@@ -46,13 +50,15 @@ export class AddEditComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', Validators.required],
       sex: ['0', Validators.required],
-      department: [null, Validators.required],
+      departmentId: [null, Validators.required],
       rank: [null, Validators.required],
       level: [null, Validators.required],
       employeeCategory: [null, Validators.required],
       employmentStatus: [null, Validators.required],
-      onTheJobDay: ['', Validators.required],
-      resignationDay: [''],
+      onTheJobDay: [new Date(moment().toString()), Validators.required],
+      status: [''],
+      idNumber: [''],
+      resignationDay: [new Date(moment().toString())],
       phone: [''],
       workPhone: [''],
       birthday: [''],
@@ -60,11 +66,20 @@ export class AddEditComponent implements OnInit {
       memo: [''],
     });
 
-    this.route.data.subscribe((data: { departments: any, user: any }) => {
+    this.route.data.pipe(first()).subscribe(data => {
       this.departments = data.departments.table;
-      this.form.patchValue(data.user);
+      if (data.user) {
+        this.form.patchValue(data.user);
+        this.form.patchValue({ onTheJobDay: new Date(data.user.onTheJobDay)});
+        this.form.patchValue({ resignationDay: new Date(data.user.resignationDay) });
+      }
     });
-
+    //setTimeout(() => {
+    //  this.form$.subscribe((data: { departments: any, user: any }) => {
+    //    this.departments = data.departments.table;
+    //    this.form.patchValue(data.user);
+    //  });
+    //},1000);
     this.employeeCategories = this.constantsService.employeeCategory;
     this.employmentStatus = this.constantsService.employmentStatus;
     //if (this.location.getState().data) {
@@ -118,7 +133,8 @@ export class AddEditComponent implements OnInit {
   }
 
   private updateUser() {
-    this.accountService.update(this.id, this.form.value)
+    let val = Object.assign({ id: this.id }, this.form.value);
+    this.accountService.update(val, this.constantsService.userApi.update)
       .pipe(first())
       .subscribe(
         data => {
@@ -129,5 +145,9 @@ export class AddEditComponent implements OnInit {
           this.alertService.error(error);
           this.loading = false;
         });
+  }
+
+  get onTheJobDay() {
+    return this.form.get('onTheJobDay');
   }
 }

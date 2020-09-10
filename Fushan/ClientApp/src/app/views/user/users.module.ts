@@ -9,6 +9,7 @@ import { AddEditComponent } from './add-edit.component';
 //import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from '@shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
         ReactiveFormsModule,
     UsersRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    BsDatepickerModule.forRoot(),
     //NgxDatatableModule
     ],
     declarations: [

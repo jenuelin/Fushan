@@ -21,3 +21,11 @@ PM> EntityFrameworkCore\Update-Database
 TODO fix:
 breadcrumb
 https://medium.com/applantic/https-medium-com-applantic-how-to-implement-breadcrumb-navigation-in-angular-and-primeng-52573e49b97a
+
+
+JWT reference
+https://codeburst.io/jwt-auth-in-asp-net-core-148fb72bed03
+
+
+Attaching an Angular Child Component's Form to a Parent
+https://davembush.github.io/attaching-an-angular-child-component-s-form-to-a-parent/

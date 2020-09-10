@@ -53,12 +53,9 @@ export class AccountService extends BaseService {
   }
 
   logout() {
-    //TODO fix this
-    this.http.post(this.constantsService.authApi.logout, {}, this.httpOptions).subscribe(data => {
-      localStorage.removeItem('user');
-      this.userSubject.next(null);
-      this.router.navigate(['/login']);
-    })
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
     // remove user from local storage and set current user to null
   }
 

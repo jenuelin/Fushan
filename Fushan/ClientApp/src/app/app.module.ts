@@ -45,7 +45,11 @@ import { Login, TableRequestBase } from '@shared/_models';
 //import { DataTableComponent } from './_components/data-table/data-table.component';
 //import { ItemComponent } from './_components/data-table/item/item.component';
 //import { JwPaginationModule } from 'jw-angular-pagination';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { zhCnLocale } from 'ngx-bootstrap/locale';
 
+defineLocale('zh-cn', zhCnLocale);
 registerLocaleData(localezhTw, 'zh-tw');
 
 @NgModule({
@@ -65,6 +69,7 @@ registerLocaleData(localezhTw, 'zh-tw');
     }),
     NgbModule,
     SharedModule,
+    BsDatepickerModule.forRoot()
     //NgxDatatableModule,
     //JwPaginationModule,
   ],
@@ -100,6 +105,7 @@ registerLocaleData(localezhTw, 'zh-tw');
     TableRequestBase,
     Login,
   ],
+  exports: [BsDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { };

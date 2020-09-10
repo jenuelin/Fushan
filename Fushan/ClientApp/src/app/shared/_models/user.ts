@@ -4,12 +4,13 @@ export class User {
   username: string;
   firstName: string;
   lastName: string;
+  sex: string;
   rank: string;
   level: boolean;
-  employeeCategory: number;
-  employmentStatus: number;
+  employeeCategory: string;
+  employmentStatus: string;
   onTheJobDay: string;
-  status: number;
+  status: string;
   resignationDay: string;
   phone: string;
   workPhone: string;

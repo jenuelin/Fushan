@@ -19,15 +19,17 @@ namespace Fushan.Mapping
             //CreateMap<MusicResource, Music>();
             //CreateMap<SaveMusicResource, Music>();
             //CreateMap<ArtistResource, Artist>();
-            CreateMap<AppUser, CreateUpdateUserRequest>();
             CreateMap<CreateUpdateUserRequest, AppUser>();
-            CreateMap<AppUser, AppUserModel>();
-            CreateMap<AppUserModel, AppUser>();
             CreateMap<GetDepartmentsRequest, Department>();
             CreateMap<Department, DepartmentModel>();
             CreateMap<CreateUpdateDepartmentRequest, Department>();
             CreateMap<RegistrationRequest, AppUser>();
+            CreateMap<AppUserModel, AppUser>();
             CreateMap<AppUser, AppUserModel>()
+                .ForMember(u => u.EmploymentStatusString, opt => opt.MapFrom(ur => ur.EmploymentStatus))
+                .ForMember(u => u.EmploymentStatus, opt => opt.MapFrom(ur => (int)ur.EmploymentStatus))
+                .ForMember(u => u.EmployeeCategoryString, opt => opt.MapFrom(ur => ur.EmployeeCategory))
+                .ForMember(u => u.EmployeeCategory, opt => opt.MapFrom(ur => (int)ur.EmployeeCategory))
                 .ForMember(u => u.SexString, opt => opt.MapFrom(ur => ur.Sex))
                 .ForMember(u => u.Sex, opt => opt.MapFrom(ur => (int)ur.Sex));
         }

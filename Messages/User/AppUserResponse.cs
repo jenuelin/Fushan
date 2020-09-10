@@ -14,17 +14,20 @@ namespace Messages.User
         public string Email { get; set; }
         public string UserID { get; set; }
         public string Username { get; set; }
-        public int Sex { get; set; }
+        public string Sex { get; set; }
         public SexEnum SexString { get; set; }
         public Guid? DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public string Rank { get; set; }
         public string Level { get; set; }
-        public EmployeeCategoryEnum EmployeeCategory { get; set; }
+        public string EmployeeCategory { get; set; }
+        public EmployeeCategoryEnum EmployeeCategoryString { get; set; }
 
         //[JsonConverter(typeof(StringEnumConverter))]
         //public EmployeeCategoryEnum EmployeeCategoryString { get; set; }
-        public EmploymentStatusEnum EmploymentStatus { get; set; }
+        public string EmploymentStatus { get; set; }
+
+        public EmploymentStatusEnum EmploymentStatusString { get; set; }
 
         public string OnTheJobDay { get; set; }
         public StatusEnum Status { get; set; }
