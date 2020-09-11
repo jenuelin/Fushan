@@ -42,17 +42,17 @@ const routes: Routes = [
       //},
       {
         path: 'users',
-        loadChildren: userModule
+        loadChildren: userModule,
       },
       {
         path: 'departments',
-        loadChildren: departmentModule
+        loadChildren: departmentModule,
       },
-      {
-        path: '',
-        redirectTo: '/users',
-        pathMatch: 'full'
-      },
+      //{
+      //  path: '',
+      //  redirectTo: '/users',
+      //  pathMatch: 'full'
+      //},
       //{
       //  path: 'users', canActivate: [AuthGuard],
       //  children: [
@@ -61,10 +61,10 @@ const routes: Routes = [
       //    { path: 'edit/:id', component: AddEditComponent }
       //  ]
       //},
-      //{
-      //  path: '',
-      //  component: DashboardComponent,
-      //},
+      {
+        path: '',
+        component: DashboardComponent,
+      },
     ],
   },
   {

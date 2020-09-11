@@ -38,7 +38,7 @@ import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-men
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadcrumbComponent } from '@shared/_components/breadcrumb/breadcrumb.component';
 import { DepartmentModule } from './views/department/department.module';
-import { Login, TableRequestBase } from '@shared/_models';
+import { Login, Registration, TableRequestBase } from '@shared/_models';
 //import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 //import { PaginationComponent } from './_components/dataTable/pagination/pagination.component';
@@ -105,6 +105,7 @@ registerLocaleData(localezhTw, 'zh-tw');
     fakeBackendProvider,
     ConstantsService,
     TableRequestBase,
+    Registration,
     Login,
   ],
   exports: [BsDatepickerModule],

@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.toastr.error(error, '發生錯誤!!');
         this.accountService.logout();
       }
-      return throwError(error);
+      return throwError(error.message || error);
     }))
   }
 }

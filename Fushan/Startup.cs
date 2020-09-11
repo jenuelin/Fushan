@@ -1,4 +1,5 @@
 using AutoMapper;
+using DataServices;
 using DataServices.Db;
 using DataServices.Model;
 using DataServices.Services;
@@ -73,7 +74,6 @@ namespace Fushan
                 {
                     sqlOptions.MigrationsAssembly("DataServices");
                 });
-
             });
 
             services.AddIdentity<AppUser, Role>(options =>
@@ -99,7 +99,7 @@ namespace Fushan
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, FushanContext fushanContext, UserManager<AppUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -151,6 +151,9 @@ namespace Fushan
             //    c.RoutePrefix = "";
             //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Music V1");
             //});
+
+            fushanContext.Database.EnsureCreated();
+            FushanDbInitializer.SeedUsers(userManager);
         }
     }
 }

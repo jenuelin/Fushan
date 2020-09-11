@@ -3,8 +3,8 @@ using DataServices.Model;
 using DataServices.Services;
 using Fushan.Helpers;
 using Messages;
-using Messages.User;
 using Messages.Auth;
+using Messages.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -55,7 +55,7 @@ namespace Fushan.Controllers
 
             //await _member.CreateMember(userIdentity.Id, model.Location);
 
-            return new OkObjectResult("Account created");
+            return new OkObjectResult(new { message = "Account created" });
         }
 
         [HttpPost("Login")]

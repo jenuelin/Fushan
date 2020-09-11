@@ -29,3 +29,6 @@ https://codeburst.io/jwt-auth-in-asp-net-core-148fb72bed03
 
 Attaching an Angular Child Component's Form to a Parent
 https://davembush.github.io/attaching-an-angular-child-component-s-form-to-a-parent/
+
+ASP.NET Core 3.1 - Role Based Authorization Tutorial with Example API
+https://jasonwatmore.com/post/2019/10/16/aspnet-core-3-role-based-authorization-tutorial-with-example-api

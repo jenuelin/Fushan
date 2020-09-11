@@ -52,7 +52,7 @@ namespace Fushan.Controllers
 
             await _department.CreateDepartment(department);
 
-            return new OkObjectResult("Account created");
+            return new OkObjectResult(new { message = "Account created" });
         }
 
         [HttpGet]

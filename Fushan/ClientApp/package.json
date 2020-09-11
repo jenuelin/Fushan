@@ -28,6 +28,7 @@
         "ionicons": "2.0.1",
         "jw-angular-pagination": "^1.2.0",
         "jw-paginate": "^1.0.4",
+        "jwt-decode": "^3.0.0-beta.2",
         "moment": "^2.27.0",
         "ngx-bootstrap": "^6.1.0",
         "ngx-spinner": "^10.0.1",

@@ -8,14 +8,15 @@ import {
   UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AccountService } from '../services/account.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '@shared/_services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-  constructor(private router: Router,private accountService: AccountService) {
+  constructor(private router: Router, private authService: AuthenticationService, private toastr: ToastrService) {
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -25,8 +26,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const user = this.accountService.userValue;
-    if (user) {
+    if (this.authService.isAuthenticated) {
+      // decode the token to get its payload
+      if (next.data.roles && next.data.roles.indexOf(this.authService.role) === -1) {
+        // role not authorised so redirect to home page
+        this.goToLogin(state);
+        this.toastr.error("no permission", '發生錯誤!!');
+        return false;
+      }
       // authorised so return true
       return true;
     }
@@ -43,14 +50,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const user = this.accountService.userValue;
-    if (user) {
+    if (this.authService.isAuthenticated) {
       // authorised so return true
       return true;
     }
 
     // not logged in so redirect to login page with the return url
-    //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
+  }
+
+  goToLogin(state) {
+    this.router.navigate(['/login']);
   }
 }

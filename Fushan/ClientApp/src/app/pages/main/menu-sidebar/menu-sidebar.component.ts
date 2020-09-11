@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Login } from '@shared/_models';
 import { AccountService } from '@utils/services/account.service';
+import { AuthenticationService } from '@shared/_services';
 
 @Component({
   selector: 'app-menu-sidebar',
@@ -19,7 +20,7 @@ export class MenuSidebarComponent implements OnInit, AfterViewInit {
   @Output() mainSidebarHeight: EventEmitter<any> = new EventEmitter<any>();
 
   public user: Login;
-  constructor(public accountService: AccountService) {
+  constructor(public accountService: AccountService, private authService: AuthenticationService) {
     this.user = this.accountService.userValue;
   }
 
@@ -27,5 +28,9 @@ export class MenuSidebarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.mainSidebarHeight.emit(this.mainSidebar.nativeElement.offsetHeight);
+  }
+
+  get isAdmin() {
+    return this.authService.isAdmin;
   }
 }

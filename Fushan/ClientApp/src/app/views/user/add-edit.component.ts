@@ -108,6 +108,7 @@ export class AddEditComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 

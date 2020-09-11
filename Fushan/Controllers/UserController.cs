@@ -51,7 +51,7 @@ namespace Fushan.Controllers
 
             //await _member.CreateMember(userIdentity.Id, model.Location);
 
-            return new OkObjectResult("Account created");
+            return new OkObjectResult(new { message = "Account created" });
         }
 
         [HttpGet]
@@ -110,7 +110,7 @@ namespace Fushan.Controllers
 
             await _userManager.DeleteAsync(await _userManager.FindByIdAsync(id));
 
-            return new OkObjectResult("Account deleted");
+            return new OkObjectResult(new { message = "Account deleted" });
         }
     }
 }
