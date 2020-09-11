@@ -69,6 +69,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\api.interceptor.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\departmentRequest.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\registration.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableBase.ts" />

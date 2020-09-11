@@ -32,6 +32,7 @@ export class AddEditComponent implements OnInit {
     private _localeService: BsLocaleService
   ) {
     this.location = location;
+    let now = moment();
     //this._localeService.use('zh-cn');
   }
 
@@ -55,10 +56,10 @@ export class AddEditComponent implements OnInit {
       level: [null, Validators.required],
       employeeCategory: [null, Validators.required],
       employmentStatus: [null, Validators.required],
-      onTheJobDay: [new Date(moment().toString()), Validators.required],
+      onTheJobDay: [null, Validators.required],
       status: [''],
       idNumber: [''],
-      resignationDay: [new Date(moment().toString())],
+      resignationDay: [null],
       phone: [''],
       workPhone: [''],
       birthday: [''],
@@ -70,8 +71,8 @@ export class AddEditComponent implements OnInit {
       this.departments = data.departments.table;
       if (data.user) {
         this.form.patchValue(data.user);
-        this.form.patchValue({ onTheJobDay: new Date(data.user.onTheJobDay)});
-        this.form.patchValue({ resignationDay: new Date(data.user.resignationDay) });
+        this.form.patchValue({ onTheJobDay: (data.user.onTheJobDay ? new Date(data.user.onTheJobDay) : null)});
+        this.form.patchValue({ resignationDay: (data.user.resignationDay ? new Date(data.user.resignationDay) : null) });
       }
     });
     //setTimeout(() => {

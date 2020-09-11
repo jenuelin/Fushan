@@ -51,20 +51,18 @@
                 <table id="user" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>User ID</th>
-                      <th>Username</th>
-                      <th>Sex</th>
-                      <th>Sex</th>
-                      <th>Rank</th>
-                      <th>Level</th>
+                      <th>編號</th>
+                      <th>姓名</th>
+                      <th>性別</th>
+                      <th>職級</th>
+                      <th>職等</th>
                       <th style="width: 10%"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of items">
-                      <td>{{item.userId}}</td>
+                      <td>{{item.userID}}</td>
                       <td>{{item.username}}</td>
-                      <td>{{item.sex}}</td>
                       <td>{{item.sexString}}</td>
                       <td>{{item.rank}}</td>
                       <td>{{item.level}}</td>
@@ -76,11 +74,16 @@
                         </button>
                       </td>
                     </tr>
-                    <tr *ngIf="!items">
+                    <tr class="odd" *ngIf="form.totalCount === 0">
+                    <td valign="top" colspan="6" class="dataTables_empty">
+                      No matching records found
+                    </td>
+                    </tr>
+                    <!--<tr *ngIf="!items">
                       <td colspan="7" class="text-center">
                         <span class="spinner-border spinner-border-lg align-center"></span>
                       </td>
-                    </tr>
+                    </tr>-->
                   </tbody>
                   <!--<tfoot>
         <tr>

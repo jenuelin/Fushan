@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersModule } from '@app/views/user/users.module';
 
 // used to create fake backend
-import { fakeBackendProvider } from '@shared/_helpers';
+import { ApiInterceptor, fakeBackendProvider } from '@shared/_helpers';
 
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor } from '@shared/_helpers';
@@ -48,6 +48,7 @@ import { Login, TableRequestBase } from '@shared/_models';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { zhCnLocale } from 'ngx-bootstrap/locale';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 defineLocale('zh-cn', zhCnLocale);
 registerLocaleData(localezhTw, 'zh-tw');
@@ -69,7 +70,8 @@ registerLocaleData(localezhTw, 'zh-tw');
     }),
     NgbModule,
     SharedModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgxSpinnerModule,
     //NgxDatatableModule,
     //JwPaginationModule,
   ],
@@ -98,7 +100,7 @@ registerLocaleData(localezhTw, 'zh-tw');
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     // provider used to create fake backend
     fakeBackendProvider,
     ConstantsService,

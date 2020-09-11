@@ -37,7 +37,6 @@ export class ListComponent implements OnInit {
   }
 
   getUsers(params: any, page: number) {
-    this.items = null;
     return this.accountService.getAll(params, this.constantsService.userApi.getAll)
       //.pipe(table => {
       //  this.items = this.users = table.table;

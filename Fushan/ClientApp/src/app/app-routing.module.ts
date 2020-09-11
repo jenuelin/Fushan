@@ -32,14 +32,14 @@ const routes: Routes = [
     path: '', component: MainComponent, canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      {
-        path: 'profile',
-        component: ProfileComponent,
-      },
-      {
-        path: 'blank',
-        component: BlankComponent,
-      },
+      //{
+      //  path: 'profile',
+      //  component: ProfileComponent,
+      //},
+      //{
+      //  path: 'blank',
+      //  component: BlankComponent,
+      //},
       {
         path: 'users',
         loadChildren: userModule
@@ -47,6 +47,11 @@ const routes: Routes = [
       {
         path: 'departments',
         loadChildren: departmentModule
+      },
+      {
+        path: '',
+        redirectTo: '/users',
+        pathMatch: 'full'
       },
       //{
       //  path: 'users', canActivate: [AuthGuard],
@@ -56,10 +61,10 @@ const routes: Routes = [
       //    { path: 'edit/:id', component: AddEditComponent }
       //  ]
       //},
-      {
-        path: '',
-        component: DashboardComponent,
-      },
+      //{
+      //  path: '',
+      //  component: DashboardComponent,
+      //},
     ],
   },
   {
