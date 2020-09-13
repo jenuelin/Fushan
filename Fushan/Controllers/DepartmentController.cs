@@ -73,5 +73,12 @@ namespace Fushan.Controllers
                 table = userMappers
             };
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _department.DeleteDepartment(id);
+            return new OkObjectResult(new { message = "Department deleted" });
+        }
     }
 }

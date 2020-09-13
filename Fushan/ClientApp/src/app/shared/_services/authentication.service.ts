@@ -5,19 +5,15 @@ import { AccountService } from '@utils/services/account.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements OnInit {
-  user
+export class AuthenticationService {
   tokenPayload
   constructor(private accountService: AccountService) {
   }
 
-  ngOnInit(): void {
-    this.user = this.accountService.userValue
+  set user(user) {
+    this.user = user;
+    this.tokenPayload = decode(this.user.token);
   }
-  //set user(user) {
-  //  this.user = user;
-  //  this.tokenPayload = decode(this.user.token);
-  //}
 
   get isAuthenticated() {
     return !!this.user;
