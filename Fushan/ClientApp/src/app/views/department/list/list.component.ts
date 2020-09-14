@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
 
   deleteDepartments(item: any) {
     item.isDeleting = true;
-    this.departmentService.delete(item.id)
+    this.departmentService.delete(`${this.constantsService.departmentApi.delete}${item.id}`)
       .pipe(first())
       .subscribe(() => {
         this.getDepartments(this.form, 1)

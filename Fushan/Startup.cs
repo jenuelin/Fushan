@@ -1,4 +1,5 @@
 using AutoMapper;
+using Contracts;
 using DataServices;
 using DataServices.Db;
 using DataServices.Model;
@@ -14,9 +15,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Converters;
+using NLog;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Fushan
@@ -33,6 +36,8 @@ namespace Fushan
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureLoggerService();
+            //services.Configure<IISServerOptions>(options =>
             //services.Configure<IISServerOptions>(options =>
             //{
             //    options.AutomaticAuthentication = false;
@@ -99,19 +104,24 @@ namespace Fushan
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, FushanContext fushanContext, UserManager<AppUser> userManager)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env, 
+            FushanContext fushanContext, 
+            UserManager<AppUser> userManager)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                //app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            //app.ConfigureExceptionHandler(logger);
+            app.ConfigureCustomExceptionMiddleware();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -153,7 +163,10 @@ namespace Fushan
             //});
 
             fushanContext.Database.EnsureCreated();
-            FushanDbInitializer.SeedUsers(userManager);
+            if(fushanContext.Users.Count() == 0)
+            {
+                FushanDbInitializer.SeedUsers(userManager);
+            }
         }
     }
 }

@@ -48,11 +48,15 @@ export class UserDropdownMenuComponent implements OnInit {
   }
 
   showDropdownMenu() {
-    this.renderer.addClass(this.dropdownMenu.nativeElement, 'show');
+    if (this.dropdownMenu.nativeElement) {
+      this.renderer.addClass(this.dropdownMenu.nativeElement, 'show');
+    }
   }
 
   hideDropdownMenu() {
-    this.renderer.removeClass(this.dropdownMenu.nativeElement, 'show');
+    if (this.dropdownMenu.nativeElement) {
+      this.renderer.removeClass(this.dropdownMenu.nativeElement, 'show');
+    }
   }
 
   logout() {

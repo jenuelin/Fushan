@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataServices.Migrations
 {
     [DbContext(typeof(FushanContext))]
-    [Migration("20200904091347_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200913190341_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -271,6 +271,22 @@ namespace DataServices.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8c507d89-93e5-41e2-8ae0-c1b8b39090ec"),
+                            ConcurrencyStamp = "40f39025-b865-4f49-8007-7a1c67a6f577",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("3af108e5-6594-42f6-af05-01c7a9f4d675"),
+                            ConcurrencyStamp = "cc7a3fd3-d685-41a3-a3c3-a4edc1a04299",
+                            Name = "User",
+                            NormalizedName = "User"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -377,8 +393,9 @@ namespace DataServices.Migrations
             modelBuilder.Entity("DataServices.Model.AppUser", b =>
                 {
                     b.HasOne("DataServices.Model.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
+                        .WithMany("AppUsers")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataServices.Model.Department", b =>

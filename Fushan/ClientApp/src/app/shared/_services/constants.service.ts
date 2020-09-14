@@ -11,10 +11,28 @@ export class ConstantsService {
   readonly distLocation: string = 'MyApplication/';
 
   private readonly authDefaultApi = '/api/auth/';
-  readonly authApi = { login: `${this.authDefaultApi}login`, logout: `${this.authDefaultApi}logout`, register: `${this.authDefaultApi}signUp` };
+  readonly authApi = {
+    login: `${this.authDefaultApi}login`,
+    logout: `${this.authDefaultApi}logout`,
+    register: `${this.authDefaultApi}signUp`
+  };
+
   private readonly userDefaultApi = '/api/user/';
-  readonly userApi = { getAll: this.userDefaultApi, get: this.userDefaultApi, create: this.userDefaultApi, update: this.userDefaultApi };
+  readonly userApi = {
+    getAll: this.userDefaultApi,
+    get: this.userDefaultApi,
+    create: this.userDefaultApi,
+    update: this.userDefaultApi,
+    delete: this.userDefaultApi,
+  };
+
   private readonly departmentDefaultApi = '/api/department/';
-  readonly departmentApi = { getAll: this.departmentDefaultApi, get: this.departmentDefaultApi, create: this.departmentDefaultApi, update: this.departmentDefaultApi };
+  readonly departmentApi = {
+    getAll: this.departmentDefaultApi,
+    get: this.departmentDefaultApi,
+    create: this.departmentDefaultApi,
+    update: this.departmentDefaultApi,
+    delete: this.departmentDefaultApi,
+  };
   constructor() { }
 }

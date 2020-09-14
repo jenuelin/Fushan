@@ -10,17 +10,17 @@ namespace DataServices.Services
 {
     public interface IDepartment
     {
-        Task<Department> GetDepartment(Guid id);
-        Task<Department[]> GetDepartments(Expression<Func<Department, bool>> expression);
-        Task<Department[]> GetDepartments();
+        Task<Department> GetDepartmentAsync(Guid id, Func<DbSet<Department>, IQueryable<Department>> preQuery = null);
+        Task<Department[]> GetDepartmentsAsync(Expression<Func<Department, bool>> expression);
+        Task<Department[]> GetDepartmentsAsync();
 
         IQueryable<Department> GetDepartmentsQuery();
 
-        Task CreateDepartment(Department request);
+        Task CreateDepartmentAsync(Department request);
 
-        Task UpdateDepartment(Department request);
+        Task UpdateDepartmentAsync(Department request);
 
-        Task DeleteDepartment(Guid id);
+        Task DeleteDepartmentAsync(Guid id);
     }
     public class DepartmentServices : IDepartment
     {
@@ -35,36 +35,37 @@ namespace DataServices.Services
             _newRedisRepository = newRedisRepository;
         }
 
-        Task<Department> IDepartment.GetDepartment(Guid id)
+        Task<Department> IDepartment.GetDepartmentAsync(Guid id, Func<DbSet<Department>, IQueryable<Department>> preQuery)
         {
-            return _repository.Departments.FirstOrDefaultAsync(m => m.Id == id);
+            if (preQuery == null) preQuery = c => c;
+            return preQuery(_repository.Departments).FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        Task<Department[]> IDepartment.GetDepartments(Expression<Func<Department, bool>> expression)
+        Task<Department[]> IDepartment.GetDepartmentsAsync(Expression<Func<Department, bool>> expression)
         {
             return _repository.Departments.Where(expression).AsNoTracking().ToArrayAsync();
         }
 
-        Task IDepartment.CreateDepartment(Department department)
+        Task IDepartment.CreateDepartmentAsync(Department department)
         {
             _repository.Add(department);
             return _repository.SaveChangesAsync();
         }
 
-        Task IDepartment.UpdateDepartment(Department department)
+        Task IDepartment.UpdateDepartmentAsync(Department department)
         {
             _repository.Entry(department).State = EntityState.Modified;
             return _repository.SaveChangesAsync();
         }
 
-        Task IDepartment.DeleteDepartment(Guid id)
+        Task IDepartment.DeleteDepartmentAsync(Guid id)
         {
             var department = _repository.Departments.FirstOrDefault(m => m.Id == id);
             _repository.Delete(department);
             return _repository.SaveChangesAsync();
         }
 
-        Task<Department[]> IDepartment.GetDepartments()
+        Task<Department[]> IDepartment.GetDepartmentsAsync()
         {
             return _repository.Departments.AsNoTracking().ToArrayAsync();
         }

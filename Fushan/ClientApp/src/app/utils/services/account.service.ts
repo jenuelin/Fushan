@@ -8,7 +8,7 @@ import { environment } from '@environments/environment';
 import { Login, Paging, UserTable, TableList, Registration, User } from '@shared/_models';
 import * as _ from 'lodash';
 import { BaseService } from './base.service';
-import { AuthenticationService, ConstantsService } from '@shared/_services';
+import { ConstantsService } from '@shared/_services';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService extends BaseService {
@@ -23,7 +23,6 @@ export class AccountService extends BaseService {
     private router: Router,
     http: HttpClient,
     private constantsService: ConstantsService,
-    private authService: AuthenticationService
   ) {
     super(http);
     let user = JSON.parse(localStorage.getItem('user'));
@@ -49,7 +48,6 @@ export class AccountService extends BaseService {
         localStorage.setItem('user', JSON.stringify(user));
         //super.httpOptions.headers = super.httpOptions.headers.set('Authorization', 'Bearer ' + _.get(user, 'token'));
         this.userSubject.next(user);
-        this.authService.user = this.userValue;
         return user;
       }));
   }

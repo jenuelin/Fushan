@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     if (this.authService.isAuthenticated) {
       // decode the token to get its payload
-      if (next.data.roles && next.data.roles.indexOf(this.authService.role) === -1) {
+      if (next.data.roles && !this.authService.hasPermission(next.data.roles)) {
         // role not authorised so redirect to home page
         this.goToLogin(state);
         this.toastr.error("no permission", '發生錯誤!!');

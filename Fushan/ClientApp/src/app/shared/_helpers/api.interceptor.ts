@@ -23,9 +23,10 @@ export class ApiInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(catchError((err: any) => {
       this.count--;
+      if (this.count == 0) this.spinner.hide();
       return throwError(err);
     })).pipe(tap(event => {
-      if (event instanceof HttpResponse || event instanceof Object) {
+      if (event instanceof HttpResponse) {
         this.count--;
         if (this.count == 0) this.spinner.hide();
       }

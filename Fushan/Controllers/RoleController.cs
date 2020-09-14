@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using DataServices.Model;
+using Messages.Role;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,12 +51,12 @@ namespace Fushan.Controllers
             return Problem(roleResult.Errors.First().Description, null, 500);
         }
 
-        [HttpPost("User/{userEmail}/Role")]
-        public async Task<IActionResult> AddUserToRole(string userEmail, [FromBody] string roleName)
+        [HttpPost("User/Role")]
+        public async Task<IActionResult> AddUserToRole(AddEmailToRoleRequest request)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userEmail);
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == request.UserEmail);
 
-            var result = await _userManager.AddToRoleAsync(user, roleName);
+            var result = await _userManager.AddToRoleAsync(user, request.RoleName);
 
             if (result.Succeeded)
             {

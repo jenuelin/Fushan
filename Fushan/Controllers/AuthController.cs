@@ -116,7 +116,8 @@ namespace Fushan.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            var roleClaims = roles.Select(r => new Claim(ClaimTypes.Role, r));
+            var roleClaims = roles.Select(r => new Claim("roles", r));
+            roleClaims.Append(new Claim("roles", "User"));
             claims.AddRange(roleClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Contracts;
 using DataServices.Model;
 using DataServices.Services;
 using Fushan.Extensions;
@@ -27,13 +28,20 @@ namespace Fushan.Controllers
         private readonly IMapper _mapper;
         private readonly JwtSettings _jwtSettings;
         private readonly IDepartment _department;
+        private readonly ILoggerManager _logger;
 
-        public DepartmentController(IDepartment department, IMapper mapper, UserManager<AppUser> userManager, IOptionsSnapshot<JwtSettings> jwtSettings)
+        public DepartmentController(
+            IDepartment department, 
+            IMapper mapper, 
+            UserManager<AppUser> userManager, 
+            IOptionsSnapshot<JwtSettings> jwtSettings,
+            ILoggerManager logger)
         {
             _mapper = mapper;
             _department = department;
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -50,7 +58,7 @@ namespace Fushan.Controllers
             department.CreatedOn = DateTimeOffset.Now;
             department.UpdatedOn = DateTimeOffset.Now;
 
-            await _department.CreateDepartment(department);
+            await _department.CreateDepartmentAsync(department);
 
             return new OkObjectResult(new { message = "Account created" });
         }
@@ -74,10 +82,15 @@ namespace Fushan.Controllers
             };
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _department.DeleteDepartment(id);
+            var department = await _department.GetDepartmentAsync(id,x => x.Include(d => d.AppUsers));
+            if(department.AppUsers.Count > 0)
+            {
+                //return new BadRequestObjectResult(new { message = "請先移除部門所有人員才能刪除部門" });
+            }
+            await _department.DeleteDepartmentAsync(id);
             return new OkObjectResult(new { message = "Department deleted" });
         }
     }

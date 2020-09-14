@@ -1,18 +1,21 @@
 import { Injectable, OnInit } from '@angular/core';
 import decode from 'jwt-decode';
 import { AccountService } from '@utils/services/account.service';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  user
   tokenPayload
   constructor(private accountService: AccountService) {
-  }
-
-  set user(user) {
-    this.user = user;
-    this.tokenPayload = decode(this.user.token);
+    this.accountService.user.subscribe(x => {
+      this.user = x
+      if (this.user) {
+        this.tokenPayload = decode(this.user.token);
+      }
+    });
   }
 
   get isAuthenticated() {
@@ -24,6 +27,12 @@ export class AuthenticationService {
   }
 
   get isAdmin() {
-    return this.tokenPayload.role === "Admin";
+    return _.includes(this.tokenPayload.roles,"Admin") ;
+  }
+
+  hasPermission(roles) {
+    return _.every(roles, role => {
+      return _.includes(this.tokenPayload.roles, role);
+    });
   }
 }

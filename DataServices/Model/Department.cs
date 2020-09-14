@@ -1,5 +1,6 @@
 ﻿using Configration.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace DataServices.Model
 {
@@ -19,5 +20,6 @@ namespace DataServices.Model
         public DateTimeOffset UpdatedOn { get; set; }
         public string CreatedByUsername { get; set; }
         public string UpdatedByUsername { get; set; }
-    }
+        public virtual ICollection<AppUser> AppUsers { get; set; }
+}
 }

@@ -15,9 +15,12 @@ export class ErrorInterceptor implements HttpInterceptor {
       const error = err.error || err.message || err.statusText;
       if (err.status === 401) {
         // auto logout if 401 response returned from api
-        this.toastr.error(error, '發生錯誤!!');
         this.accountService.logout();
       }
+      //if (err.status === 404) {
+      //  this.toastr.error(error, '發生錯誤!!');
+      //}
+      this.toastr.error(error.message, '發生錯誤!!');
       return throwError(error.message || error);
     }))
   }

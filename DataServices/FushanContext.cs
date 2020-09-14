@@ -31,6 +31,7 @@ namespace DataServices.Db
             modelBuilder.Entity<Game>();
             modelBuilder.Entity<Department>();
 
+            modelBuilder.ApplyConfiguration(new AppUserMap());
             modelBuilder.ApplyConfiguration(new MemberMap());
             modelBuilder.ApplyConfiguration(new GameMap());
             modelBuilder.ApplyConfiguration(new DepartmentMap());
