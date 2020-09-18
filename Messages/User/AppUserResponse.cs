@@ -1,11 +1,11 @@
 ﻿using Configration.Enums;
+using Messages.Role;
 using System;
 
 namespace Messages.User
 {
-    public class AppUserResponse : PageableResponse
+    public class AppUserResponse : PageableResponse<AppUserModel>
     {
-        public AppUserModel[] table { get; set; }
     }
 
     public class AppUserModel
@@ -44,5 +44,12 @@ namespace Messages.User
         public DateTimeOffset UpdatedOn { get; set; }
         public string CreatedByUsername { get; set; }
         public string UpdatedByUsername { get; set; }
+        public UserRoles[] UserRoles { get; set; }
+    }
+
+    public class UserRoles
+    {
+        public AppUserModel User { get; set; }
+        public RoleModel Role { get; set; }
     }
 }

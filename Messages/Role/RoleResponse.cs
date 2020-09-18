@@ -1,19 +1,16 @@
 ﻿using Configration.Enums;
 using System;
 
-namespace Messages.Department
+namespace Messages.Role
 {
-    public class DepartmentResponse : PageableResponse<DepartmentModel>
+    public class RoleResponse : PageableResponse<RoleModel>
     {
     }
 
-    public class DepartmentModel
+    public class RoleModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string DepartmentId { get; set; }
-        public Guid? UpperId { get; set; }
-        public DepartmentModel UpperDepartment { get; set; }
         public StatusEnum Status { get; set; }
         public StatusEnum StatusString { get; set; }
         public DateTimeOffset CreatedOn { get; set; }

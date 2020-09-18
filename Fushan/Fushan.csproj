@@ -57,6 +57,7 @@
     <None Remove="ClientApp\src\app\account\login.component.ts" />
     <None Remove="ClientApp\src\app\account\register.component.html" />
     <None Remove="ClientApp\src\app\account\register.component.ts" />
+    <None Remove="ClientApp\src\app\utils\resolves\department.resolver.ts" />
     <None Remove="ClientApp\src\app\utils\resolves\departments.resolver.ts" />
     <None Remove="ClientApp\src\app\utils\resolves\user.resolver.ts" />
     <None Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
@@ -71,10 +72,14 @@
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\api.interceptor.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\department.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\departmentRequest.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\registration.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\role.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\roleRequest.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableBase.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableRequestBase.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\table\roleTable.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\user.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\userRequest.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\utils\resolves\index.ts" />
@@ -90,6 +95,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\utils\resolves\department.resolver.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Update="ClientApp\src\app\utils\resolves\user.resolver.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

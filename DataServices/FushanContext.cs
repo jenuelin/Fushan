@@ -18,12 +18,11 @@ namespace DataServices.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var adminRoleId = Guid.NewGuid();
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Role>().HasData(
-                new Role { Id = adminRoleId, Name = "Admin", NormalizedName = "Admin" },
-                new Role { Id = Guid.NewGuid(), Name = "User", NormalizedName = "User" }
-                );
+            //modelBuilder.Entity<Role>().HasData(
+            //    new Role { Id = adminRoleId, Name = "Admin", NormalizedName = "Admin" },
+            //    new Role { Id = Guid.NewGuid(), Name = "User", NormalizedName = "User" }
+            //    );
             //modelBuilder.Entity<AppUser>().HasData(
             //    new AppUser { Id = Guid.NewGuid(), UserName = "admin@gmail.com", Email = "admin@gmail.com", NormalizedUserName = "admin" }
             //    );
@@ -32,6 +31,7 @@ namespace DataServices.Db
             modelBuilder.Entity<Department>();
 
             modelBuilder.ApplyConfiguration(new AppUserMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new MemberMap());
             modelBuilder.ApplyConfiguration(new GameMap());
             modelBuilder.ApplyConfiguration(new DepartmentMap());

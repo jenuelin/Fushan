@@ -67,11 +67,11 @@ export class AddEditComponent implements OnInit {
       memo: [''],
     });
 
-    this.route.data.pipe(first()).subscribe(data => {
+    this.route.data.pipe(first()).subscribe((data: { departments: any, user: any }) => {
       this.departments = data.departments.table;
       if (data.user) {
         this.form.patchValue(data.user);
-        this.form.patchValue({ onTheJobDay: (data.user.onTheJobDay ? new Date(data.user.onTheJobDay) : null)});
+        this.form.patchValue({ onTheJobDay: (data.user.onTheJobDay ? new Date(data.user.onTheJobDay) : null) });
         this.form.patchValue({ resignationDay: (data.user.resignationDay ? new Date(data.user.resignationDay) : null) });
       }
     });

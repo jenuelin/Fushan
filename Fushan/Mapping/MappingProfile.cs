@@ -2,6 +2,7 @@
 using DataServices.Model;
 using Messages;
 using Messages.Department;
+using Messages.Role;
 using Messages.User;
 
 namespace Fushan.Mapping
@@ -19,6 +20,8 @@ namespace Fushan.Mapping
             //CreateMap<MusicResource, Music>();
             //CreateMap<SaveMusicResource, Music>();
             //CreateMap<ArtistResource, Artist>();
+            CreateMap<Role, RoleModel>();
+            CreateMap<AppUserRole, UserRoles>();
             CreateMap<CreateUpdateUserRequest, AppUser>();
             CreateMap<GetDepartmentsRequest, Department>();
             CreateMap<Department, DepartmentModel>();

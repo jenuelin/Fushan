@@ -16,6 +16,7 @@ export class AddEditComponent implements OnInit {
   isAddMode: boolean;
   loading = false;
   submitted = false;
+  departments: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,13 @@ export class AddEditComponent implements OnInit {
       departmentId: ['', Validators.required],
       name: ['', Validators.required],
       memo: [''],
+    });
+
+    this.route.data.pipe(first()).subscribe((data: { departments: any, department: any }) => {
+      this.departments = data.departments.table;
+      if (data.department) {
+        this.form.patchValue(data.department);
+      }
     });
 
     if (!this.isAddMode) {

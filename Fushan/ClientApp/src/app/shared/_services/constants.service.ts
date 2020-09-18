@@ -26,6 +26,15 @@ export class ConstantsService {
     delete: this.userDefaultApi,
   };
 
+  private readonly roleDefaultApi = '/api/role/';
+  readonly roleApi = {
+    getAll: this.roleDefaultApi,
+    get: this.roleDefaultApi,
+    create: this.roleDefaultApi,
+    update: this.roleDefaultApi,
+    delete: this.roleDefaultApi,
+  };
+
   private readonly departmentDefaultApi = '/api/department/';
   readonly departmentApi = {
     getAll: this.departmentDefaultApi,

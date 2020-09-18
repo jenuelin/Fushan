@@ -17,6 +17,7 @@ import { NonAuthGuard } from './utils/guards/non-auth.guard';
 //const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const userModule = () => import('@app/views/user/users.module').then(x => x.UsersModule);
 const departmentModule = () => import('@app/views/department/department.module').then(x => x.DepartmentModule);
+const rolesModule = () => import('@app/views/role/roles.module').then(x => x.RolesModule);
 
 //const routes: Routes = [
 //    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'users',
         loadChildren: userModule,
+      },
+      {
+        path: 'roles',
+        loadChildren: rolesModule,
       },
       {
         path: 'departments',
@@ -81,7 +86,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

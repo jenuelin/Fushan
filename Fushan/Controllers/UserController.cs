@@ -73,7 +73,7 @@ namespace Fushan.Controllers
                 Count = result.Count,
                 PagePageIndex = result.PageIndex,
                 TotalPages = result.TotalPages,
-                table = userMappers
+                Table = userMappers
             };
         }
 

@@ -30,36 +30,44 @@
           role="menu"
           data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
-  with font-awesome or any other icon font library -->
+        with font-awesome or any other icon font library -->
         <!--<li class="nav-item">
-    <a [routerLink]="['/']" class="nav-link">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>
-        Dashboard
-      </p>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a [routerLink]="['/blank']" class="nav-link">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>
-        Blank
-      </p>
-    </a>
-  </li>-->
+          <a [routerLink]="['/']" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/blank']" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Blank
+            </p>
+          </a>
+        </li>-->
         <!--<li class="nav-item">
-    <a [routerLink]="['/userso']" class="nav-link">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>
-        Userso
-      </p>
-    </a>
-  </li>-->
+          <a [routerLink]="['/userso']" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Userso
+            </p>
+          </a>
+        </li>-->
         <li class="nav-item" *ngIf="isAdmin">
           <a [routerLink]="['/users']" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               員工
+            </p>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a [routerLink]="['/roles']" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              角色
             </p>
           </a>
         </li>

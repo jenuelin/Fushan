@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersModule } from '@app/views/user/users.module';
+import { RolesModule } from '@app/views/role/roles.module';
+import { DepartmentModule } from './views/department/department.module';
 
 // used to create fake backend
 import { ApiInterceptor, fakeBackendProvider } from '@shared/_helpers';
@@ -37,7 +39,6 @@ import localezhTw from '@angular/common/locales/zh-Hant';
 import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-menu/user-dropdown-menu.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadcrumbComponent } from '@shared/_components/breadcrumb/breadcrumb.component';
-import { DepartmentModule } from './views/department/department.module';
 import { Login, Registration, TableRequestBase } from '@shared/_models';
 //import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -60,6 +61,7 @@ registerLocaleData(localezhTw, 'zh-tw');
     HttpClientModule,
     UsersModule,
     DepartmentModule,
+    RolesModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BreadcrumbModule,

@@ -22,6 +22,7 @@ namespace Fushan.Extensions
 
             return query.Provider.CreateQuery<T>(orderBy);
         }
+
         public static IQueryable<TSource> Where<TSource, TFilter>(this IQueryable<TSource> source, TFilter? filter,
             Expression<Func<TSource, bool>> predicate) where TFilter : struct
         {
@@ -32,11 +33,24 @@ namespace Fushan.Extensions
 
             return source;
         }
+
         // Where extension for string filters
         public static IQueryable<TSource> Where<TSource>(this IQueryable<TSource> source, string filter,
             Expression<Func<TSource, bool>> predicate)
         {
             if (!string.IsNullOrWhiteSpace(filter))
+            {
+                source = source.Where(predicate);
+            }
+
+            return source;
+        }
+
+        // Where extension for string filters
+        public static IQueryable<TSource> Where<TSource>(this IQueryable<TSource> source, Guid filter,
+            Expression<Func<TSource, bool>> predicate)
+        {
+            if (filter != null && filter != Guid.Empty)
             {
                 source = source.Where(predicate);
             }

@@ -31,9 +31,9 @@ namespace Fushan.Controllers
         private readonly ILoggerManager _logger;
 
         public DepartmentController(
-            IDepartment department, 
-            IMapper mapper, 
-            UserManager<AppUser> userManager, 
+            IDepartment department,
+            IMapper mapper,
+            UserManager<AppUser> userManager,
             IOptionsSnapshot<JwtSettings> jwtSettings,
             ILoggerManager logger)
         {
@@ -78,15 +78,22 @@ namespace Fushan.Controllers
                 Count = result.Count,
                 PagePageIndex = result.PageIndex,
                 TotalPages = result.TotalPages,
-                table = userMappers
+                Table = userMappers
             };
+        }
+
+        [HttpGet("{id}")]
+        public async Task<DepartmentModel> Get(Guid id)
+        {
+            var department = await _department.GetDepartmentAsync(id);
+            return _mapper.Map<Department, DepartmentModel>(department);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var department = await _department.GetDepartmentAsync(id,x => x.Include(d => d.AppUsers));
-            if(department.AppUsers.Count > 0)
+            var department = await _department.GetDepartmentAsync(id, x => x.Include(d => d.AppUsers));
+            if (department.AppUsers.Count > 0)
             {
                 //return new BadRequestObjectResult(new { message = "請先移除部門所有人員才能刪除部門" });
             }

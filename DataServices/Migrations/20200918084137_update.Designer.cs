@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataServices.Migrations
 {
     [DbContext(typeof(FushanContext))]
-    [Migration("20200913190341_init")]
-    partial class init
+    [Migration("20200918084137_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,6 +170,9 @@ namespace DataServices.Migrations
                     b.Property<string>("DepartmentId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("DepartmentLeaderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Memo")
                         .HasColumnType("nvarchar(max)");
 
@@ -192,6 +195,10 @@ namespace DataServices.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentLeaderId")
+                        .IsUnique()
+                        .HasFilter("[DepartmentLeaderId] IS NOT NULL");
 
                     b.HasIndex("UpperDepartmentId");
 
@@ -255,6 +262,12 @@ namespace DataServices.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -262,6 +275,12 @@ namespace DataServices.Migrations
                     b.Property<string>("NormalizedName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<string>("UpdatedByUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -271,22 +290,6 @@ namespace DataServices.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8c507d89-93e5-41e2-8ae0-c1b8b39090ec"),
-                            ConcurrencyStamp = "40f39025-b865-4f49-8007-7a1c67a6f577",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("3af108e5-6594-42f6-af05-01c7a9f4d675"),
-                            ConcurrencyStamp = "cc7a3fd3-d685-41a3-a3c3-a4edc1a04299",
-                            Name = "User",
-                            NormalizedName = "User"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -364,11 +367,15 @@ namespace DataServices.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<Guid>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -390,16 +397,28 @@ namespace DataServices.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DataServices.Model.AppUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasDiscriminator().HasValue("AppUserRole");
+                });
+
             modelBuilder.Entity("DataServices.Model.AppUser", b =>
                 {
-                    b.HasOne("DataServices.Model.Department", "Department")
+                    b.HasOne("DataServices.Model.Department", null)
                         .WithMany("AppUsers")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentId");
                 });
 
             modelBuilder.Entity("DataServices.Model.Department", b =>
                 {
+                    b.HasOne("DataServices.Model.AppUser", "DepartmentLeader")
+                        .WithOne("Department")
+                        .HasForeignKey("DataServices.Model.Department", "DepartmentLeaderId");
+
                     b.HasOne("DataServices.Model.Department", "UpperDepartment")
                         .WithMany()
                         .HasForeignKey("UpperDepartmentId");
@@ -441,14 +460,8 @@ namespace DataServices.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("DataServices.Model.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DataServices.Model.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -456,10 +469,16 @@ namespace DataServices.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("DataServices.Model.AppUserRole", b =>
                 {
-                    b.HasOne("DataServices.Model.AppUser", null)
-                        .WithMany()
+                    b.HasOne("DataServices.Model.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataServices.Model.AppUser", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

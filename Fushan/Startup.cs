@@ -1,5 +1,4 @@
 using AutoMapper;
-using Contracts;
 using DataServices;
 using DataServices.Db;
 using DataServices.Model;
@@ -104,9 +103,9 @@ namespace Fushan
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-            IWebHostEnvironment env, 
-            FushanContext fushanContext, 
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
+            FushanContext fushanContext,
             UserManager<AppUser> userManager)
         {
             LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -163,9 +162,10 @@ namespace Fushan
             //});
 
             fushanContext.Database.EnsureCreated();
-            if(fushanContext.Users.Count() == 0)
+            if (fushanContext.Users.Count() == 0)
             {
-                FushanDbInitializer.SeedUsers(userManager);
+                FushanDbInitializer.SeedRoles(fushanContext);
+                FushanDbInitializer.SeedUsers(userManager, fushanContext);
             }
         }
     }

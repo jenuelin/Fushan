@@ -1,5 +1,5 @@
-﻿using System;
-using Configration.Enums;
+﻿using Configration.Enums;
+using System;
 
 namespace Messages
 {
@@ -8,6 +8,7 @@ namespace Messages
         public Guid? Id { get; set; }
         public string Name { get; set; }
         public string UserID { get; set; }
+        public Guid? UpperId { get; set; }
         public StatusEnum Status { get; set; }
         public string Memo { get; set; }
     }
