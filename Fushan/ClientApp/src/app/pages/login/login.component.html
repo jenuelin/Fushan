@@ -1,20 +1,18 @@
 <div class="login-box">
   <div class="login-logo">
-    <a [routerLink]="['/']"><b>Fushan</b></a>
+    <a [routerLink]="['/']"><b>{{'signin.name'| translate}}</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">登入</p>
+      <p class="login-box-msg">{{ 'signin.title' | translate}}</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="input-group mb-3">
-          <input
-            formControlName="email"
-            type="email"
-            class="form-control"
-            placeholder="Email"
-          />
+          <input formControlName="email"
+                 type="email"
+                 class="form-control"
+                 placeholder="{{'signin.username' | translate}}" />
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -22,12 +20,10 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input
-            formControlName="password"
-            type="password"
-            class="form-control"
-            placeholder="Password"
-          />
+          <input formControlName="password"
+                 type="password"
+                 class="form-control"
+                 placeholder="{{'signin.password' | translate}}" />
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -39,23 +35,32 @@
             <div class="icheck-primary">
               <input type="checkbox" id="remember" />
               <label for="remember">
-                Remember Me
+                <span translate="signin.rememberMe"></span>
               </label>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-5">
-            <app-button
-              [type]="'submit'"
-              [block]="true"
-              [text]="'登入'"
-              [loading]="isAuthLoading"
-            ></app-button>
+            <app-button [type]="'submit'"
+                        [block]="true"
+                        [text]="'signin.btnSignIn'"
+                        [loading]="isAuthLoading"></app-button>
           </div>
           <!-- /.col -->
         </div>
       </form>
-
+      <div class="margin">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">{{'global.lang' | translate }}</button>
+          <button type="button" id="translation" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div aria-labelledby="translation" class="dropdown-menu" role="menu">
+            <a class="dropdown-item" (click)="useLanguage('en')">{{'global.translationEn' | translate }}</a>
+            <a class="dropdown-item" (click)="useLanguage('zh-tw')">{{'global.translationTw' | translate }}</a>
+          </div>
+        </div>
+      </div>
       <!--<div class="social-auth-links text-center mb-3">
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-primary">
@@ -68,12 +73,10 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a [routerLink]="['/forgot-password']">忘記密碼</a>
+        <a [routerLink]="['/forgot-password']"><span translate="signin.forgetPassword"></span></a>
       </p>
       <p class="mb-0">
-        <a [routerLink]="['/register']" class="text-center"
-          >註冊</a
-        >
+        <a [routerLink]="['/register']" class="text-center"><span translate="signin.signUp"></span></a>
       </p>
     </div>
     <!-- /.login-card-body -->

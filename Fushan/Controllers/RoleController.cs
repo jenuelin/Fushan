@@ -60,7 +60,7 @@ namespace Fushan.Controllers
         }
 
         [HttpPost("Roles")]
-        public async Task<IActionResult> CreateRole(string roleName)
+        public async Task<IActionResult> CreateRole([FromForm] string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
             {

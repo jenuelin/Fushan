@@ -1,51 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using DataServices.Model;
+﻿using DataServices.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataServices.Db
 {
     public interface IRepository
     {
         int SaveChanges();
+
         Task<int> SaveChangesAsync();
-        IEnumerable<T> Get<T>() where T : class;
-        IEnumerable<T> Get<T>(Expression<Func<T, bool>> predicate);
-        void Add<T>(T entity) where T : class;
-        void Delete<T>(T entity) where T : class;
-        void Update<T>(T entity) where T : class;
-        void RemoveRange<ICollection>(ICollection entities);
+
+        //Task<IEnumerable<T>> Get<T>() where T : class;
+
+        //Task<IEnumerable<T>> Get<T>(Expression<Func<T, bool>> predicate) where T : class;
+
+        Task Add<T>(T entity) where T : class;
+
+        Task Delete<T>(T entity) where T : class;
+
+        Task Update<T>(T entity) where T : class;
+
+        Task RemoveRange<ICollection>(ICollection entities);
+
         EntityEntry<T> Entry<T>(T entity) where T : class;
 
         IQueryable<T> GetQueryable<T>() where T : class;
 
-        DbSet<Member> Members { get; set; }
-        DbSet<Game> Games { get; set; }
+        DbSet<AppUser> AppUsers { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<Product> Products { get; set; }
         DbSet<Department> Departments { get; set; }
     }
+
     public class Repository : IRepository
     {
         private readonly FushanContext _testContext;
+
         public Repository(FushanContext testContext)
         {
             _testContext = testContext;
         }
-        public DbSet<Member> Members { get => _testContext.Members; set => Members = value; }
-        public DbSet<Game> Games { get => _testContext.Games; set => Games = value; }
+
+        public DbSet<AppUser> AppUsers { get => _testContext.AppUsers; set => AppUsers = value; }
+        public DbSet<Role> Roles { get => _testContext.Roles; set => Roles = value; }
+        public DbSet<Product> Products { get => _testContext.Products; set => Products = value; }
         public DbSet<Department> Departments { get => _testContext.Departments; set => Departments = value; }
 
-        void IRepository.Add<T>(T entity)
+        Task IRepository.Add<T>(T entity)
         {
             _testContext.Set<T>().Add(entity);
+            return _testContext.SaveChangesAsync();
         }
 
-        void IRepository.Delete<T>(T entity)
+        Task IRepository.Delete<T>(T entity)
         {
             _testContext.Set<T>().Remove(entity);
+            return _testContext.SaveChangesAsync();
         }
 
         EntityEntry<T> IRepository.Entry<T>(T entity)
@@ -53,24 +65,27 @@ namespace DataServices.Db
             return _testContext.Entry(entity);
         }
 
-        IEnumerable<T> IRepository.Get<T>()
-        {
-            throw new NotImplementedException();
-        }
+        //Task<IEnumerable<T>> IRepository.Get<T>()
+        //{
+        //    var obj = _testContext.Set<T>();
+        //    return obj.ToArrayAsync();
+        //}
 
-        IEnumerable<T> IRepository.Get<T>(Expression<Func<T, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+        //async Task<IEnumerable<T>> IRepository.Get<T>(Expression<Func<T, bool>> predicate)
+        //{
+        //    DbSet<T> obj = _testContext.Set<T>();
+        //    return await obj.Where(predicate).ToArrayAsync().ConfigureAwait(false);
+        //}
 
         IQueryable<T> IRepository.GetQueryable<T>()
         {
             return _testContext.Set<T>().AsQueryable();
         }
 
-        void IRepository.RemoveRange<ICollection>(ICollection entities)
+        Task IRepository.RemoveRange<ICollection>(ICollection entities)
         {
             _testContext.RemoveRange(entities);
+            return _testContext.SaveChangesAsync();
         }
 
         int IRepository.SaveChanges()
@@ -83,9 +98,10 @@ namespace DataServices.Db
             return _testContext.SaveChangesAsync();
         }
 
-        void IRepository.Update<T>(T entity)
+        Task IRepository.Update<T>(T entity)
         {
             _testContext.Set<T>().Update(entity);
+            return _testContext.SaveChangesAsync();
         }
     }
 }

@@ -12,8 +12,12 @@ namespace DataServices.Db
         {
         }
 
-        public DbSet<Member> Members { get; set; }
-        public DbSet<Game> Games { get; set; }
+        //public DbSet<Member> Members { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+
+        public new DbSet<Role> Roles { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,14 +30,17 @@ namespace DataServices.Db
             //modelBuilder.Entity<AppUser>().HasData(
             //    new AppUser { Id = Guid.NewGuid(), UserName = "admin@gmail.com", Email = "admin@gmail.com", NormalizedUserName = "admin" }
             //    );
-            modelBuilder.Entity<Member>();
-            modelBuilder.Entity<Game>();
+            //modelBuilder.Entity<Member>();
+            modelBuilder.Entity<AppUser>();
+            modelBuilder.Entity<Role>();
+            modelBuilder.Entity<Product>();
+            modelBuilder.Entity<Order>();
             modelBuilder.Entity<Department>();
 
             modelBuilder.ApplyConfiguration(new AppUserMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
-            modelBuilder.ApplyConfiguration(new MemberMap());
-            modelBuilder.ApplyConfiguration(new GameMap());
+            //modelBuilder.ApplyConfiguration(new MemberMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.ApplyConfiguration(new DepartmentMap());
         }
     }

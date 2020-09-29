@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using DataServices.Model;
-using DataServices.Services;
 using Fushan.Helpers;
 using Messages;
 using Messages.Auth;
@@ -28,12 +27,10 @@ namespace Fushan.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtSettings _jwtSettings;
-        private readonly IMember _member;
 
-        public AuthController(IMember member, IMapper mapper, UserManager<AppUser> userManager, IOptionsSnapshot<JwtSettings> jwtSettings)
+        public AuthController(IMapper mapper, UserManager<AppUser> userManager, IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _mapper = mapper;
-            _member = member;
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
         }

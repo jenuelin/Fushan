@@ -13,7 +13,10 @@ const routes: Routes = [
     data: { roles: ["Admin"] },
     children: [
       { path: '', component: ListComponent },
-      { path: 'add', component: AddEditComponent },
+      {
+        path: 'add', component: AddEditComponent, resolve: {
+          departments: DepartmentsResolver,
+        } },
       {
         path: 'edit/:id', component: AddEditComponent, resolve: {
           departments: DepartmentsResolver,

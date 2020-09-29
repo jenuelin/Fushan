@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService, ConstantsService } from '@shared/_services';
 import { first } from 'rxjs/operators';
 import { DepartmentService } from '@utils/services/department.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-add-edit',
@@ -37,7 +38,9 @@ export class AddEditComponent implements OnInit {
     });
 
     this.route.data.pipe(first()).subscribe((data: { departments: any, department: any }) => {
-      this.departments = data.departments.table;
+      if (!_.isNil(data.departments)) {
+        this.departments = data.departments.table;
+      }
       if (data.department) {
         this.form.patchValue(data.department);
       }

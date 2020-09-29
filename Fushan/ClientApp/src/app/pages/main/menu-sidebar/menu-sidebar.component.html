@@ -19,7 +19,7 @@
           alt="User Image" />
       </div>-->
       <div class="info">
-        <a [routerLink]="['/profile']" class="d-block">{{user.username}}</a>
+        <a [routerLink]="['/profile']" routerLinkActive="active" class="d-block">{{user.username}}</a>
       </div>
     </div>
 
@@ -56,7 +56,7 @@
           </a>
         </li>-->
         <li class="nav-item" *ngIf="isAdmin">
-          <a [routerLink]="['/users']" class="nav-link">
+          <a [routerLink]="['/users']" class="nav-link" routerLinkActive="active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               員工
@@ -64,7 +64,7 @@
           </a>
         </li>
         <li class="nav-item" *ngIf="isAdmin">
-          <a [routerLink]="['/roles']" class="nav-link">
+          <a [routerLink]="['/roles']" class="nav-link" routerLinkActive="active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               角色
@@ -72,7 +72,7 @@
           </a>
         </li>
         <li class="nav-item" *ngIf="isAdmin">
-          <a [routerLink]="['/departments']" class="nav-link">
+          <a [routerLink]="['/departments']" class="nav-link" routerLinkActive="active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               部門

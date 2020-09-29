@@ -11,7 +11,9 @@ namespace DataServices.Services
     public interface IDepartment
     {
         Task<Department> GetDepartmentAsync(Guid id, Func<DbSet<Department>, IQueryable<Department>> preQuery = null);
+
         Task<Department[]> GetDepartmentsAsync(Expression<Func<Department, bool>> expression);
+
         Task<Department[]> GetDepartmentsAsync();
 
         IQueryable<Department> GetDepartmentsQuery();
@@ -22,6 +24,7 @@ namespace DataServices.Services
 
         Task DeleteDepartmentAsync(Guid id);
     }
+
     public class DepartmentServices : IDepartment
     {
         private readonly IRepository _repository;
@@ -48,7 +51,7 @@ namespace DataServices.Services
 
         Task IDepartment.CreateDepartmentAsync(Department department)
         {
-            _repository.Add(department);
+            _repository.Departments.Add(department);
             return _repository.SaveChangesAsync();
         }
 
@@ -61,7 +64,7 @@ namespace DataServices.Services
         Task IDepartment.DeleteDepartmentAsync(Guid id)
         {
             var department = _repository.Departments.FirstOrDefault(m => m.Id == id);
-            _repository.Delete(department);
+            _repository.Entry(department).State = EntityState.Deleted;
             return _repository.SaveChangesAsync();
         }
 

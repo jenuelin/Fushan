@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UsersModule } from '@app/views/user/users.module';
 import { RolesModule } from '@app/views/role/roles.module';
 import { DepartmentModule } from './views/department/department.module';
@@ -34,8 +34,8 @@ import { NotificationsDropdownMenuComponent } from './pages/main/header/notifica
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppButtonComponent } from '@shared/_components/app-button/app-button.component';
 
-import { registerLocaleData } from '@angular/common';
-import localezhTw from '@angular/common/locales/zh-Hant';
+//import { registerLocaleData } from '@angular/common';
+//import localezhTw from '@angular/common/locales/zh-Hant';
 import { UserDropdownMenuComponent } from './pages/main/header/user-dropdown-menu/user-dropdown-menu.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BreadcrumbComponent } from '@shared/_components/breadcrumb/breadcrumb.component';
@@ -50,9 +50,18 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { zhCnLocale } from 'ngx-bootstrap/locale';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 defineLocale('zh-cn', zhCnLocale);
-registerLocaleData(localezhTw, 'zh-tw');
+//registerLocaleData(localezhTw, 'zh-tw');
+export function createTranslateLoader(http: HttpClient) {
+  return new MultiTranslateHttpLoader(http, [
+    { prefix: "./assets/i18n/", suffix: ".json" },
+    { prefix: "./assets/i18n/User/", suffix: ".json" },
+  ]);
+}
 
 @NgModule({
   imports: [
@@ -74,6 +83,14 @@ registerLocaleData(localezhTw, 'zh-tw');
     SharedModule,
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      },
+      //isolate: true
+    })
     //NgxDatatableModule,
     //JwPaginationModule,
   ],

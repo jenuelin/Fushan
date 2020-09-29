@@ -44,14 +44,13 @@
                     </div>
                     <button type="button" (click)="search()" class="btn btn-primary">搜尋</button>
                   </div>
-                  
                 </div>
               </div>
               <div class="row">
                 <table id="user" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>編號</th>
+                      <th>{{ 'table.number' | translate }}</th>
                       <th>姓名</th>
                       <th>性別</th>
                       <th>職級</th>
@@ -75,9 +74,9 @@
                       </td>
                     </tr>
                     <tr class="odd" *ngIf="form.totalCount === 0">
-                    <td valign="top" colspan="6" class="dataTables_empty">
-                      No matching records found
-                    </td>
+                      <td valign="top" colspan="6" class="dataTables_empty">
+                        No matching records found
+                      </td>
                     </tr>
                     <!--<tr *ngIf="!items">
                       <td colspan="7" class="text-center">
@@ -86,16 +85,15 @@
                     </tr>-->
                   </tbody>
                   <!--<tfoot>
-        <tr>
-          <th>Rendering engine</th>
-          <th>Browser</th>
-          <th>Platform(s)</th>
-          <th>Engine version</th>
-          <th>CSS grade</th>
-        </tr>
-      </tfoot>-->
+                    <tr>
+                      <th>Rendering engine</th>
+                      <th>Browser</th>
+                      <th>Platform(s)</th>
+                      <th>Engine version</th>
+                      <th>CSS grade</th>
+                    </tr>
+                  </tfoot>-->
                 </table>
-
               </div>
             </div>
           </div>

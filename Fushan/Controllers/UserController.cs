@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DataServices.Model;
-using DataServices.Services;
 using Fushan.Extensions;
 using Fushan.Helpers;
 using Fushan.Mapping;
+using Messages;
 using Messages.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,16 +22,14 @@ namespace Fushan.Controllers
     [ApiController, Authorize]
     public class UserController : ControllerBase
     {
-        private readonly IMember _member;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
         //private readonly IHubContext<StronglyTypedChatHubBase, IChatClient> _hub;
-        public UserController(IMember member, UserManager<AppUser> userManager, IMapper mapper)
+        public UserController(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _member = member;
         }
 
         // POST api/accounts
@@ -55,7 +53,7 @@ namespace Fushan.Controllers
         }
 
         [HttpGet]
-        public async Task<AppUserResponse> GetAll([FromQuery] GetUsersRequest request)
+        public async Task<MessageResponse> GetAll([FromQuery] GetUsersRequest request)
         {
             //TODO: 把config改成DI方式
             //var config = new MapperConfiguration(cfg => {

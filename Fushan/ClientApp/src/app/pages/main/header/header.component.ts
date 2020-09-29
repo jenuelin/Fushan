@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/utils/services/app.service';
 import { AccountService } from '@utils/services/account.service';
+import { LanguageService } from '@shared/_services';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
   @Output() toggleMenuSidebar: EventEmitter<any> = new EventEmitter<any>();
   public searchForm: FormGroup;
 
-  constructor(private appService: AppService, private accService: AccountService
+  constructor(private appService: AppService, private accService: AccountService,
+    private languageService: LanguageService,
 ) {}
 
   ngOnInit() {
@@ -23,5 +25,9 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.accService.logout();
+  }
+
+  useLanguage(language: string) {
+    this.languageService.setLang(language);
   }
 }

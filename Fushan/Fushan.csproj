@@ -1,150 +1,169 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-    <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+		<IsPackable>false</IsPackable>
+		<SpaRoot>ClientApp\</SpaRoot>
+		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 
-    <!-- Set this to true if you enable server-side prerendering -->
-    <BuildServerSideRenderer>false</BuildServerSideRenderer>
-  </PropertyGroup>
+		<!-- Set this to true if you enable server-side prerendering -->
+		<BuildServerSideRenderer>false</BuildServerSideRenderer>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NLog" Version="4.7.4" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.7.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NLog" Version="4.7.4" />
+		<PackageReference Include="NSwag.AspNetCore" Version="13.7.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="ClientApp\src\app\account\**" />
-    <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\src\app\account\**" />
-    <EmbeddedResource Remove="ClientApp\src\app\account\**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Remove="ClientApp\src\app\account\**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<!-- Don't publish the SPA source files, but do show them in the project files list -->
+		<Compile Remove="ClientApp\src\app\account\**" />
+		<Content Remove="$(SpaRoot)**" />
+		<Content Remove="ClientApp\src\app\account\**" />
+		<EmbeddedResource Remove="ClientApp\src\app\account\**" />
+		<None Remove="$(SpaRoot)**" />
+		<None Remove="ClientApp\src\app\account\**" />
+		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="ClientApp\src\app\account\account-routing.module.ts" />
-    <None Remove="ClientApp\src\app\account\account.module.ts" />
-    <None Remove="ClientApp\src\app\account\layout.component.html" />
-    <None Remove="ClientApp\src\app\account\layout.component.ts" />
-    <None Remove="ClientApp\src\app\account\login.component.html" />
-    <None Remove="ClientApp\src\app\account\login.component.ts" />
-    <None Remove="ClientApp\src\app\account\register.component.html" />
-    <None Remove="ClientApp\src\app\account\register.component.ts" />
-    <None Remove="ClientApp\src\app\utils\resolves\department.resolver.ts" />
-    <None Remove="ClientApp\src\app\utils\resolves\departments.resolver.ts" />
-    <None Remove="ClientApp\src\app\utils\resolves\user.resolver.ts" />
-    <None Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
-    <None Remove="ClientApp\src\app\utils\services\app.service.ts" />
-    <None Remove="ClientApp\src\app\views\user\layout.component.html" />
-    <None Remove="ClientApp\src\app\views\user\layout.component.ts" />
-    <None Remove="ClientApp\src\app\shared\_components\alert.component.html" />
-    <None Remove="ClientApp\src\app\shared\_components\alert.component.ts" />
-    <None Remove="ClientApp\src\app\shared\_components\index.ts" />
-    <None Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
-  </ItemGroup>
+	<ItemGroup>
+		<TypeScriptCompile Remove="ClientApp\node_modules\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\api.interceptor.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\department.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\departmentRequest.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\registration.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\role.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\roleRequest.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableBase.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableRequestBase.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\table\roleTable.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\user.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_models\userRequest.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\utils\resolves\index.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="ClientApp\src\app\account\account-routing.module.ts" />
+		<None Remove="ClientApp\src\app\account\account.module.ts" />
+		<None Remove="ClientApp\src\app\account\layout.component.html" />
+		<None Remove="ClientApp\src\app\account\layout.component.ts" />
+		<None Remove="ClientApp\src\app\account\login.component.html" />
+		<None Remove="ClientApp\src\app\account\login.component.ts" />
+		<None Remove="ClientApp\src\app\account\register.component.html" />
+		<None Remove="ClientApp\src\app\account\register.component.ts" />
+		<None Remove="ClientApp\src\app\utils\resolves\department.resolver.ts" />
+		<None Remove="ClientApp\src\app\utils\resolves\departments.resolver.ts" />
+		<None Remove="ClientApp\src\app\utils\resolves\user.resolver.ts" />
+		<None Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
+		<None Remove="ClientApp\src\app\utils\services\app.service.ts" />
+		<None Remove="ClientApp\src\app\views\user\layout.component.html" />
+		<None Remove="ClientApp\src\app\views\user\layout.component.ts" />
+		<None Remove="ClientApp\src\app\shared\_components\alert.component.html" />
+		<None Remove="ClientApp\src\app\shared\_components\alert.component.ts" />
+		<None Remove="ClientApp\src\app\shared\_components\index.ts" />
+		<None Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\DataServices\DataServices.csproj" />
-    <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\api.interceptor.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\department.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\departmentRequest.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\registration.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\role.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\roleRequest.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableBase.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\tableRequestBase.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\table\roleTable.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\user.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_models\userRequest.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\utils\resolves\index.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.spec.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\utils\services\app.service.ts" />
+		<TypeScriptCompile Remove="ClientApp\src\app\shared\_helpers\auth.guard.ts" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <TypeScriptCompile Update="ClientApp\src\app\utils\resolves\department.resolver.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Update="ClientApp\src\app\utils\resolves\user.resolver.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Contracts\Contracts.csproj" />
+		<ProjectReference Include="..\DataServices\DataServices.csproj" />
+		<ProjectReference Include="..\LoggerService\LoggerService.csproj" />
+	</ItemGroup>
 
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
+	<ItemGroup>
+		<TypeScriptCompile Update="ClientApp\src\app\utils\resolves\department.resolver.ts">
+			<SubType>Code</SubType>
+		</TypeScriptCompile>
+		<TypeScriptCompile Update="ClientApp\src\app\utils\resolves\user.resolver.ts">
+			<SubType>Code</SubType>
+		</TypeScriptCompile>
+	</ItemGroup>
 
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+	<ItemGroup>
+		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
 
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
-      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
+	<ItemGroup>
+		<None Update="Resources\JsLocalizationGenerator.js">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>JsLocalizationGenerator.tt</DependentUpon>
+		</None>
+		<None Update="Resources\JsLocalizationGenerator.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>JsLocalizationGenerator.js</LastGenOutput>
+		</None>
+	</ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES5</TypeScriptTarget>
-    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>ES6</TypeScriptModuleKind>
-    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
-    <TypeScriptOutFile />
-    <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
-    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
-    <TypeScriptSourceMap>True</TypeScriptSourceMap>
-    <TypeScriptMapRoot />
-    <TypeScriptSourceRoot />
-  </PropertyGroup>
+	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+		<!-- Ensure Node.js is installed -->
+		<Exec Command="node --version" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+	</Target>
 
+	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+			<DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>%(DistFiles.Identity)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<TypeScriptTarget>ES5</TypeScriptTarget>
+		<TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+		<TypeScriptModuleKind>ES6</TypeScriptModuleKind>
+		<TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+		<TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+		<TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+		<TypeScriptOutFile />
+		<TypeScriptOutDir />
+		<TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+		<TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+		<TypeScriptSourceMap>True</TypeScriptSourceMap>
+		<TypeScriptMapRoot />
+		<TypeScriptSourceRoot />
+	</PropertyGroup>
 </Project>

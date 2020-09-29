@@ -30,6 +30,20 @@
   </form>-->
 
   <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <div class="margin">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">{{'global.lang' | translate }}</button>
+          <button type="button" id="translation" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div aria-labelledby="translation" class="dropdown-menu" role="menu">
+            <a class="dropdown-item" (click)="useLanguage('en')">{{'global.translationEn' | translate }}</a>
+            <a class="dropdown-item" (click)="useLanguage('zh-tw')">{{'global.translationTw' | translate }}</a>
+          </div>
+        </div>
+      </div>
+    </li>
     <!--<app-messages-dropdown-menu></app-messages-dropdown-menu>
     <app-notifications-dropdown-menu></app-notifications-dropdown-menu>-->
     <app-user-dropdown-menu></app-user-dropdown-menu>

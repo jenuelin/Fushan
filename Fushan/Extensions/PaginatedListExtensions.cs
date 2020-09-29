@@ -46,7 +46,7 @@ namespace Fushan
         public static async Task<PaginatedIQueryableExtensions<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, bool showAll = false)
         {
             var count = await source.CountAsync();
-            var item = showAll ? source.Skip((pageIndex - 1) * pageSize).Take(pageSize) : source;
+            var item = showAll ? source : source.Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return new PaginatedIQueryableExtensions<T>(item, count, pageIndex, pageSize);
         }
 

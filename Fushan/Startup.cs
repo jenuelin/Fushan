@@ -4,6 +4,7 @@ using DataServices.Db;
 using DataServices.Model;
 using DataServices.Services;
 using Fushan.Extensions;
+using Fushan.Filters;
 using Messages.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +49,7 @@ namespace Fushan
             services.AddControllers(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
+                options.Filters.Add(new ResultAttribute());
             }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
@@ -96,9 +98,9 @@ namespace Fushan
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IRepository, Repository>();
-            services.AddTransient<IRedisRepository<Member>, RedisRepository<Member>>();
+            //services.AddTransient<IRedisRepository<Member>, RedisRepository<Member>>();
             services.AddTransient<INewRedisRepository, NewRedisRepository>();
-            services.AddTransient<IMember, MemberServices>();
+            //services.AddTransient<IMember, MemberServices>();
             services.AddTransient<IDepartment, DepartmentServices>();
         }
 
@@ -167,6 +169,7 @@ namespace Fushan
                 FushanDbInitializer.SeedRoles(fushanContext);
                 FushanDbInitializer.SeedUsers(userManager, fushanContext);
             }
+            //FushanDbInitializer.SeeDepartments(fushanContext);
         }
     }
 }

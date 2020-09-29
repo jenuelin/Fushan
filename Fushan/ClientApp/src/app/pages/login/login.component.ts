@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
-import { AppService } from '../../utils/services/app.service';
+import { AppService } from '@utils/services/app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '@app/utils/services/account.service';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LanguageService } from '@shared/_services';
+import { finalize } from 'rxjs/operators/finalize';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private accService: AccountService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
+    private languageService: LanguageService,
+  ) { }
 
   ngOnInit() {
     this.renderer.addClass(document.querySelector('app'), 'login-page');
@@ -35,8 +38,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.loginForm.valid) {
+      this.isAuthLoading = true;
       this.accService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
         .pipe(first())
+        .pipe(finalize(() => this.isAuthLoading = false))
         .subscribe(
           data => {
             this.router.navigate([this.returnUrl]);
@@ -49,6 +54,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.toastr.error('請輸入正確帳號密碼', '錯誤訊息');
     }
+  }
+
+  useLanguage(language: string) {
+    this.languageService.setLang(language);
   }
 
   ngOnDestroy() {

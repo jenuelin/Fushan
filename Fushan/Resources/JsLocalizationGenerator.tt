@@ -1,0 +1,113 @@
+﻿<#@ template language="C#" hostspecific="true" #>
+<#@ output extension=".js" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Xml.Linq.dll" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#
+  var defaultCulture = "en";
+  var resourceFolder = this.Host.ResolvePath("");
+  var definitionPath = "../wwwroot/app/definitions";
+  var jsLangPath = "../ClientApp/src/assets/i18n";
+
+  CreateFolderIfNotExists(resourceFolder, jsLangPath);
+  CreateFile(resourceFolder,jsLangPath, defaultCulture);
+#>
+<#+
+  void CreateFolderIfNotExists(string resourceFolder,string jsLangPath){
+    bool folderExists = Directory.Exists(Path.Combine(resourceFolder, jsLangPath));
+    if (!folderExists){
+      Directory.CreateDirectory(Path.Combine(resourceFolder, jsLangPath));
+    }
+    DirectoryInfo directory = new DirectoryInfo(resourceFolder);
+    DirectoryInfo[] directories = directory.GetDirectories();
+    if(directories.Length > 0){
+        foreach(DirectoryInfo folder in directories){
+            bool subFolderExists = Directory.Exists(Path.Combine(resourceFolder, Path.Combine(jsLangPath, folder.Name)));
+            if(!subFolderExists){
+                Directory.CreateDirectory(Path.Combine(resourceFolder, Path.Combine(jsLangPath, folder.Name)));
+                CreateFolderIfNotExists(Path.Combine(resourceFolder, folder.Name), Path.Combine(jsLangPath, folder.Name));
+            }
+        }
+    }    
+  }
+
+  void CreateFile(string resourceFolder,string jsLangPath, string defaultCulture){
+      var resources = GetResourcesByCulture(defaultCulture, resourceFolder);
+      foreach (var culture in GetCultures(resourceFolder)){
+        resources = GetResourcesByCulture(culture, resourceFolder);
+        CreateJsLocalization(Path.Combine(resourceFolder, jsLangPath, culture+".json"), resources);
+      }
+
+      DirectoryInfo directory = new DirectoryInfo(resourceFolder);
+      DirectoryInfo[] directories = directory.GetDirectories();
+      foreach(DirectoryInfo folder in directories){
+        CreateFile(Path.Combine(resourceFolder,folder.Name), Path.Combine("../",jsLangPath,folder.Name), defaultCulture);
+      }
+  }
+
+  List<string> GetCultures(string resourceFolder) {
+    var files = Directory.GetFiles(resourceFolder, "*.resx");
+    var cultures = files.Select(file=>Path.GetFileNameWithoutExtension(file).Split('.').Last().ToLower()).Distinct();
+    return cultures.ToList();
+  }
+
+  Dictionary<string, Dictionary<string, string>> GetResourcesByCulture(string culture, string resourceFolder) {
+        var files = Directory.GetFiles(resourceFolder, "*.resx");
+    var resources = files.GroupBy(file =>
+      {
+        var fileName = Path.GetFileNameWithoutExtension(file).Split('.');
+        return fileName.First();
+      }).ToDictionary(g => g.Key, g =>
+      {
+        var defaultFile = g.Single(s => s.IndexOf(culture, StringComparison.CurrentCultureIgnoreCase) != -1);
+        var xdoc = XDocument.Load(defaultFile);
+        var dictionary = xdoc.Root.Elements("data").ToDictionary(e => e.Attribute("name").Value, e => e.Element("value").Value);
+        return dictionary;
+      });
+    return resources;
+  }
+
+  void CreateDefinition(string path, Dictionary<string, Dictionary<string, string>> resources){
+    var stringBuilder = new StringBuilder();
+    stringBuilder.Append(@"interface R {");
+    foreach (var category in resources) {
+      stringBuilder.Append(string.Format("{0}: {{", category.Key));
+      foreach (var resource in category.Value) {
+        stringBuilder.Append(string.Format("{0}: string;",resource.Key));
+      }
+      stringBuilder.Append(@"};");
+    }
+    stringBuilder.Append(@"}");
+    stringBuilder.Append(@"declare var R:R;");
+    File.WriteAllText(path, stringBuilder.ToString());
+    }
+
+  void CreateJsLocalization(string path, Dictionary<string, Dictionary<string, string>> resources){
+    var stringBuilder = new StringBuilder();
+    stringBuilder.Append(@"{");
+    var last = resources.Last();
+    foreach (var category in resources) {
+      stringBuilder.Append(string.Format("\"{0}\": {{", category.Key.ToLower()));
+      var valueLast = category.Value.Last();
+      foreach (var resource in category.Value) {
+        var value = resource.Equals(valueLast) ? "\"{0}\": \"{1}\"" : "\"{0}\": \"{1}\",";
+        stringBuilder.Append(string.Format(value,resource.Key,resource.Value));
+      }
+      if(category.Equals(last)){
+      stringBuilder.Append(@"}");
+      } else{
+      stringBuilder.Append(@"},");
+      }
+    }
+    stringBuilder.Append(@"}");
+    File.WriteAllText(path, stringBuilder.ToString());
+  }
+#>

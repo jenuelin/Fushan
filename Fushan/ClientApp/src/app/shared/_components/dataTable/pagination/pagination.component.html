@@ -5,8 +5,12 @@
   <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
     <a (click)="emitPage(pager.currentPage - 1)" class="page-link">Previous</a>
   </li>
-  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
-    <a (click)="emitPage(page)" class="page-link">{{page}}</a>
+  <li *ngFor="let page of pager.pages;let lastRecotd = last" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
+    <!--<span *ngIf="displayBeforeThreePoint(page)">...</span>-->
+    <a (click)="emitPage(page)" *ngIf="displayBeforeThreePoint(page)" class="page-link">...</a>
+    <a (click)="emitPage(page)" *ngIf="displayPageBtn(page)" class="page-link">{{page}}</a>
+    <a (click)="emitPage(page)" *ngIf="displayAfterThreePoint(page)" class="page-link">...</a>
+    <!--<span *ngIf="displayAfterThreePoint(page)">...</span>-->
   </li>
   <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
     <a (click)="emitPage(pager.currentPage + 1)" class="page-link">Next</a>

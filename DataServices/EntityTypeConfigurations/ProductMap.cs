@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataServices.EntityTypeConfigurations
 {
-    internal sealed class GameMap : IEntityTypeConfiguration<Game>
+    internal sealed class ProductMap : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<Game> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(g => g.Id);
             builder.Property(g => g.Id).IsRequired().ValueGeneratedNever();
@@ -14,5 +14,4 @@ namespace DataServices.EntityTypeConfigurations
             builder.Property(g => g.Code).HasMaxLength(256);
         }
     }
-
 }

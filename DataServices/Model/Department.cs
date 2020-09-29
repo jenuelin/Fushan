@@ -12,7 +12,7 @@ namespace DataServices.Model
         public Guid? DepartmentLeaderId { get; set; }
         public AppUser DepartmentLeader { get; set; }
         public Guid? UpperId { get; set; }
-        public virtual Department UpperDepartment { get; set; }
+        public Department UpperDepartment { get; set; }
         public StatusEnum Status { get; set; }
 
         /// <summary>

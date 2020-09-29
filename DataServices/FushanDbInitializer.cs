@@ -2,6 +2,8 @@
 using DataServices.Model;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataServices
 {
@@ -54,6 +56,42 @@ namespace DataServices
                 {
                     userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
+            }
+        }
+
+        private static Random random = new Random();
+
+        public static void SeeDepartments(FushanContext fushanContext)
+        {
+            var rows = fushanContext.Departments.Count();
+            if (rows > 0)
+                return;
+            for (int i = 0; i < 10; i++)
+            {
+                var departments = new List<Department>();
+                var count = 0;
+                while (count < 100000)
+                {
+                    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    var ranString = new string(Enumerable.Repeat(chars, 6)
+                      .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                    var department = new Department
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = ranString,
+                        DepartmentId = ranString,
+                        CreatedByUsername = "Admin",
+                        CreatedOn = DateTimeOffset.Now,
+                        UpdatedByUsername = "Admin",
+                        UpdatedOn = DateTimeOffset.Now,
+                    };
+                    departments.Add(department);
+                    count++;
+                }
+                fushanContext.Departments.AddRange(departments);
+                fushanContext.SaveChanges();
+                i++;
             }
         }
     }
